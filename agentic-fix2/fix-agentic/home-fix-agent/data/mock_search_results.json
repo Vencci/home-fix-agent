@@ -1,0 +1,150 @@
+{
+  "bulb": [
+    {
+      "title": "Philips LED A19 60W Equivalent Soft White 2700K (4-pack)",
+      "price_cents": 897,
+      "rating": 4.7,
+      "review_count": 12340,
+      "availability": "in_stock",
+      "url": "https://example.com/philips-a19-4pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07V5KSWMF"
+    },
+    {
+      "title": "Amazon Basics A19 LED 60W 2700K (6-pack)",
+      "price_cents": 1149,
+      "rating": 4.5,
+      "review_count": 8200,
+      "availability": "in_stock",
+      "url": "https://example.com/basics-a19-6pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07NQKJNTH"
+    },
+    {
+      "title": "Cree A19 LED 60W 2700K Dimmable",
+      "price_cents": 497,
+      "rating": 4.8,
+      "review_count": 6100,
+      "availability": "in_stock",
+      "url": "https://example.com/cree-a19",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07RKXLHKQ"
+    },
+    {
+      "title": "GE LED A19 60W Daylight 5000K (8-pack)",
+      "price_cents": 1599,
+      "rating": 4.4,
+      "review_count": 5400,
+      "availability": "in_stock",
+      "url": "https://example.com/ge-a19-8pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07QMKL3S5"
+    },
+    {
+      "title": "Sylvania LED A19 60W Soft White 2700K",
+      "price_cents": 349,
+      "rating": 4.3,
+      "review_count": 3200,
+      "availability": "in_stock",
+      "url": "https://example.com/sylvania-a19",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07PQKR5TH"
+    }
+  ],
+  "battery": [
+    {
+      "title": "Energizer CR2032 Lithium Coin Battery (6-pack)",
+      "price_cents": 699,
+      "rating": 4.8,
+      "review_count": 45000,
+      "availability": "in_stock",
+      "url": "https://example.com/energizer-cr2032",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B00MV8CKBM"
+    },
+    {
+      "title": "Duracell CR2032 3V Lithium Battery (4-pack)",
+      "price_cents": 599,
+      "rating": 4.7,
+      "review_count": 32000,
+      "availability": "in_stock",
+      "url": "https://example.com/duracell-cr2032",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B004LYXHRS"
+    },
+    {
+      "title": "Amazon Basics CR2032 Coin Cell Battery (10-pack)",
+      "price_cents": 549,
+      "rating": 4.5,
+      "review_count": 18000,
+      "availability": "in_stock",
+      "url": "https://example.com/basics-cr2032",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07NQ8VKZH"
+    }
+  ],
+  "filter": [
+    {
+      "title": "Filtrete 20x25x1 MERV 13 Air Filter (2-pack)",
+      "price_cents": 2899,
+      "rating": 4.6,
+      "review_count": 15000,
+      "availability": "in_stock",
+      "url": "https://example.com/filtrete-20x25",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B00TUDHM1A"
+    },
+    {
+      "title": "Nordic Pure 20x25x1 MERV 12 Pleated Filter (6-pack)",
+      "price_cents": 4299,
+      "rating": 4.5,
+      "review_count": 8900,
+      "availability": "in_stock",
+      "url": "https://example.com/nordic-20x25",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B005ESFHQO"
+    },
+    {
+      "title": "Honeywell Home 20x25x1 MERV 11 FPR 7 Filter",
+      "price_cents": 1199,
+      "rating": 4.4,
+      "review_count": 6200,
+      "availability": "in_stock",
+      "url": "https://example.com/honeywell-20x25",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07PQKR5TH"
+    }
+  ],
+  "hardware": [
+    {
+      "title": "Leviton 80401-W 1-Gang Decora Wall Plate White (10-pack)",
+      "price_cents": 899,
+      "rating": 4.8,
+      "review_count": 22000,
+      "availability": "in_stock",
+      "url": "https://example.com/leviton-wallplate",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B000BQPNFE"
+    },
+    {
+      "title": "ENERLITES Screwless Decorator Wall Plate 1-Gang White (5-pack)",
+      "price_cents": 1099,
+      "rating": 4.7,
+      "review_count": 14000,
+      "availability": "in_stock",
+      "url": "https://example.com/enerlites-plate",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07TGQKR5T"
+    },
+    {
+      "title": "Lutron Claro 1-Gang Wall Plate White",
+      "price_cents": 499,
+      "rating": 4.6,
+      "review_count": 9800,
+      "availability": "in_stock",
+      "url": "https://example.com/lutron-claro",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B000MAT2HI"
+    }
+  ]
+}

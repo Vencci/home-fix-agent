@@ -1,0 +1,125 @@
+{
+  "session": {
+    "session_id": "094f6f445d90",
+    "created_at": "2026-04-29T05:46:37.889279Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/bc7b1e351833/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T05:46:37.889556Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with two doors, one of which is severely misaligned and appears to be broken. The door is leaning outward and is not properly closing, indicating a significant structural issue. The surrounding area includes a driveway and a refrigerator placed outside the garage.",
+      "timestamp": "2026-04-29T05:46:42.459110Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the door insulated or non-insulated?\n- What type of garage door opener is currently installed?",
+      "timestamp": "2026-04-29T05:46:46.761934Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard white steel garage door replacement",
+      "timestamp": "2026-04-29T05:46:46.761952Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T05:46:50.976573Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "4852f054bb56",
+    "session_id": "094f6f445d90",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with two doors, one of which is severely misaligned and appears to be broken. The door is leaning outward and is not properly closing, indicating a significant structural issue. The surrounding area includes a driveway and a refrigerator placed outside the garage.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "f744826fb1d8",
+    "session_id": "094f6f445d90",
+    "item_category": "garage door",
+    "attributes": {
+      "item_type": "garage door",
+      "size": "standard",
+      "material": "steel",
+      "color_finish": "white"
+    },
+    "confidence_per_field": {
+      "item_type": 0.9,
+      "size": 0.5,
+      "material": 0.7,
+      "color_finish": 0.8
+    },
+    "clarification_questions": [
+      "What are the exact dimensions of the garage door?",
+      "Is the door insulated or non-insulated?",
+      "What type of garage door opener is currently installed?"
+    ],
+    "search_query": "standard white steel garage door replacement"
+  },
+  "products": [
+    {
+      "result_id": "b95be56a25be",
+      "title": "Clopay 16x7 Standard White Steel Garage Door",
+      "price_cents": 120000,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B08XYZ1234",
+      "image_url": "https://images.example.com/clopay-garage-door.jpg",
+      "asin_or_sku": "B08XYZ1234",
+      "match_score": 0.8,
+      "recommendation_reason": "Strong spec match. Highly rated (4.5⭐). In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "e4959928745d",
+      "title": "Wayne Dalton 16x7 White Steel Garage Door",
+      "price_cents": 130000,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 120,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B09ABC5678",
+      "image_url": "https://images.example.com/wayne-dalton-garage-door.jpg",
+      "asin_or_sku": "B09ABC5678",
+      "match_score": 0.612,
+      "recommendation_reason": "Strong spec match. Highly rated (4.6⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "795e7a1ab019",
+      "title": "Amarr 16x7 White Steel Garage Door",
+      "price_cents": 115000,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 95,
+      "availability": "in_stock",
+      "url": "https://www.homedepot.com/p/Amarr-16-ft-x-7-ft-White-Steel-Garage-Door-1234567890",
+      "image_url": "https://images.example.com/amarr-garage-door.jpg",
+      "asin_or_sku": "1234567890",
+      "match_score": 0.567,
+      "recommendation_reason": "Strong spec match. Good price. In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

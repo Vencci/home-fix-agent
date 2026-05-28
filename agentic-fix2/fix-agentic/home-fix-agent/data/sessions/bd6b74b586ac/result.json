@@ -1,0 +1,124 @@
+{
+  "session": {
+    "session_id": "bd6b74b586ac",
+    "created_at": "2026-04-20T01:33:13.349178Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/bd6b74b586ac/photo.jpg",
+    "description": ""
+  },
+  "analysis": {
+    "analysis_id": "55554da12aea",
+    "session_id": "bd6b74b586ac",
+    "item_category": "other",
+    "problem_type": "missing",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The roof shows significant damage with several shingles missing, exposing the underlying plywood. The shingles appear to be asphalt, and there is debris scattered across the roof surface. The area where the shingles are missing is notably larger, indicating a potential vulnerability to water intrusion.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "74a0065c6ac0",
+    "session_id": "bd6b74b586ac",
+    "item_category": "roofing shingles",
+    "attributes": {
+      "material": "asphalt",
+      "type": "3-tab or architectural",
+      "color": "black or dark",
+      "coverage_area_per_bundle": "33.3 sq ft",
+      "warranty": "20-30 years"
+    },
+    "confidence_per_field": {
+      "material": 1.0,
+      "type": 0.7,
+      "color": 0.7,
+      "coverage_area_per_bundle": 0.7,
+      "warranty": 0.7
+    },
+    "clarification_questions": [
+      "What is the specific color of the shingles?",
+      "What is the total area (in square feet) of the roof that needs to be covered?",
+      "What warranty period are you looking for in new shingles?"
+    ],
+    "search_query": "asphalt roofing shingles black 3-tab architectural"
+  },
+  "products": [
+    {
+      "result_id": "e83b17962080",
+      "title": "Cree A19 LED 60W 2700K Dimmable",
+      "price_cents": 497,
+      "currency": "USD",
+      "rating": 4.8,
+      "review_count": 6100,
+      "availability": "in_stock",
+      "url": "https://example.com/cree-a19",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07RKXLHKQ",
+      "match_score": 0.508,
+      "recommendation_reason": "Highly rated (4.8⭐). Good price. In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "d8fa5fc137d0",
+      "title": "Philips LED A19 60W Equivalent Soft White 2700K (4-pack)",
+      "price_cents": 897,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 12340,
+      "availability": "in_stock",
+      "url": "https://example.com/philips-a19-4pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07V5KSWMF",
+      "match_score": 0.472,
+      "recommendation_reason": "Highly rated (4.7⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "f0117f21211b",
+      "title": "Amazon Basics A19 LED 60W 2700K (6-pack)",
+      "price_cents": 1149,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 8200,
+      "availability": "in_stock",
+      "url": "https://example.com/basics-a19-6pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07NQKJNTH",
+      "match_score": 0.307,
+      "recommendation_reason": "Highly rated (4.5⭐). In stock",
+      "rank": 3
+    },
+    {
+      "result_id": "a7758db6cef7",
+      "title": "Sylvania LED A19 60W Soft White 2700K",
+      "price_cents": 349,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 3200,
+      "availability": "in_stock",
+      "url": "https://example.com/sylvania-a19",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07PQKR5TH",
+      "match_score": 0.3,
+      "recommendation_reason": "Good price. In stock",
+      "rank": 4
+    },
+    {
+      "result_id": "3b8e65d992c7",
+      "title": "GE LED A19 60W Daylight 5000K (8-pack)",
+      "price_cents": 1599,
+      "currency": "USD",
+      "rating": 4.4,
+      "review_count": 5400,
+      "availability": "in_stock",
+      "url": "https://example.com/ge-a19-8pk",
+      "image_url": "https://via.placeholder.com/100",
+      "asin_or_sku": "B07QMKL3S5",
+      "match_score": 0.164,
+      "recommendation_reason": "In stock",
+      "rank": 5
+    }
+  ],
+  "order": null,
+  "error": null
+}

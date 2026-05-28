@@ -1,0 +1,161 @@
+{
+  "session": {
+    "session_id": "5a724c79baa0",
+    "created_at": "2026-04-29T06:36:15.695219Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/d17f3f89ab6d/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T06:36:15.695278Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with two doors, one of which is significantly damaged and appears to be misaligned or broken. The door is sagging and not properly closing, indicating a structural issue. The surrounding area includes a driveway and a refrigerator visible next to the garage.",
+      "timestamp": "2026-04-29T06:36:20.107967Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the door insulated or non-insulated?\n- What specific material is preferred (e.g., steel, wood, fiberglass)?",
+      "timestamp": "2026-04-29T06:36:24.733171Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: replacement garage door standard size white steel",
+      "timestamp": "2026-04-29T06:36:24.733216Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T06:36:30.751088Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want steel",
+      "timestamp": "2026-04-29T06:38:08.882507Z",
+      "stage": "results"
+    },
+    {
+      "role": "system",
+      "content": "Refining search: replacement garage door standard size white steel I want steel",
+      "timestamp": "2026-04-29T06:38:08.882547Z",
+      "stage": "refining"
+    },
+    {
+      "role": "assistant",
+      "content": "Here are 3 updated results. Select one or refine further.",
+      "timestamp": "2026-04-29T06:38:15.916634Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want dark grey color",
+      "timestamp": "2026-04-29T06:38:46.004736Z",
+      "stage": "results"
+    },
+    {
+      "role": "system",
+      "content": "Refining search: replacement garage door standard size white steel I want steel I want dark grey color",
+      "timestamp": "2026-04-29T06:38:46.004760Z",
+      "stage": "refining"
+    },
+    {
+      "role": "assistant",
+      "content": "Here are 3 updated results. Select one or refine further.",
+      "timestamp": "2026-04-29T06:38:51.167914Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "c9c31ca25cb1",
+    "session_id": "5a724c79baa0",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with two doors, one of which is significantly damaged and appears to be misaligned or broken. The door is sagging and not properly closing, indicating a structural issue. The surrounding area includes a driveway and a refrigerator visible next to the garage.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "1f6c2e1642ab",
+    "session_id": "5a724c79baa0",
+    "item_category": "garage door",
+    "attributes": {
+      "item_type": "garage door",
+      "size": "standard",
+      "material": "steel",
+      "color_finish": "white"
+    },
+    "confidence_per_field": {
+      "item_type": 0.9,
+      "size": 0.5,
+      "material": 0.7,
+      "color_finish": 0.8
+    },
+    "clarification_questions": [
+      "What are the exact dimensions of the garage door?",
+      "Is the door insulated or non-insulated?",
+      "What specific material is preferred (e.g., steel, wood, fiberglass)?"
+    ],
+    "search_query": "replacement garage door standard size white steel I want steel I want dark grey color"
+  },
+  "products": [
+    {
+      "result_id": "4a029b796efe",
+      "title": "Clopay 16x7 Standard White Steel Garage Door",
+      "price_cents": 120000,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B08XYZ1234",
+      "image_url": "https://images.example.com/garage_door_white.jpg",
+      "asin_or_sku": "B08XYZ1234",
+      "match_score": 0.605,
+      "recommendation_reason": "Highly rated (4.5⭐). Good price. In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "3dff7ddca35e",
+      "title": "Amarr 16x7 Dark Grey Steel Garage Door",
+      "price_cents": 135000,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 200,
+      "availability": "in_stock",
+      "url": "https://www.homedepot.com/p/Amarr-16x7-Dark-Grey-Steel-Garage-Door/123456789",
+      "image_url": "https://images.example.com/garage_door_dark_grey.jpg",
+      "asin_or_sku": "123456789",
+      "match_score": 0.567,
+      "recommendation_reason": "Highly rated (4.7⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "64712f998843",
+      "title": "Wayne Dalton 16x7 White Steel Garage Door",
+      "price_cents": 115000,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 90,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B09ABC5678",
+      "image_url": "https://images.example.com/garage_door_white_2.jpg",
+      "asin_or_sku": "B09ABC5678",
+      "match_score": 0.467,
+      "recommendation_reason": "Good price. In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

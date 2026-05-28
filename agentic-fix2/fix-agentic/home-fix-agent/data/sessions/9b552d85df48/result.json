@@ -1,0 +1,140 @@
+{
+  "session": {
+    "session_id": "9b552d85df48",
+    "created_at": "2026-05-02T05:29:40.825929Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/27423d70a231/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-05-02T05:29:40.826107Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **garage door** — misaligned and damaged (90% confidence)\n\nThe garage door is significantly misaligned and appears to be damaged, with one side hanging lower than the other and the door not fully closing.",
+      "timestamp": "2026-05-02T05:29:50.424747Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What is the exact size of the garage door opening?\n- Is the door insulated or non-insulated?\n- What style of garage door do you prefer (e.g., traditional, modern)?",
+      "timestamp": "2026-05-02T05:29:57.980726Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard residential steel garage door white panel insulated",
+      "timestamp": "2026-05-02T05:29:57.980740Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-05-02T05:30:03.262933Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "a8f8be853da3",
+    "session_id": "9b552d85df48",
+    "item_category": "garage door",
+    "problem_type": "misaligned and damaged",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The garage door is significantly misaligned and appears to be damaged, with one side hanging lower than the other and the door not fully closing.",
+    "confidence": 0.9,
+    "difficulty_score": 4,
+    "difficulty_summary": "Repairing a misaligned garage door can be complex and may require specialized tools and skills.",
+    "required_tools": [
+      "screwdriver",
+      "wrench set",
+      "level",
+      "garage door track alignment tool"
+    ],
+    "fix_summary": "1. Disconnect the garage door opener. 2. Inspect the tracks for damage and realign them if necessary. 3. Adjust the tension on the springs. 4. Test the door for proper alignment and operation. 5. Reconnect the opener and test functionality.",
+    "diy_or_hire": "hire",
+    "hire_reason": "Repairing a garage door involves working with heavy components and potentially dangerous springs, requiring professional expertise.",
+    "hire_price_min_cents": 10000,
+    "hire_price_max_cents": 30000
+  },
+  "spec": {
+    "spec_id": "80b2dc885340",
+    "session_id": "9b552d85df48",
+    "item_category": "garage door",
+    "attributes": {
+      "size": "standard residential",
+      "material": "steel",
+      "color_finish": "white",
+      "style": "panel",
+      "insulated": "yes"
+    },
+    "confidence_per_field": {
+      "size": 0.8,
+      "material": 0.9,
+      "color_finish": 0.9,
+      "style": 0.7,
+      "insulated": 0.6
+    },
+    "clarification_questions": [
+      "What is the exact size of the garage door opening?",
+      "Is the door insulated or non-insulated?",
+      "What style of garage door do you prefer (e.g., traditional, modern)?"
+    ],
+    "search_query": "standard residential steel garage door white panel insulated"
+  },
+  "products": [
+    {
+      "result_id": "b397cb3758d0",
+      "title": "Clopay 16x7 White Insulated Steel Garage Door",
+      "price_cents": 120000,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Clopay+16x7+White+Insulated+Steel+Garage+Door",
+      "image_url": "",
+      "asin_or_sku": "CLO-16X7-WHITE-INSULATED",
+      "match_score": 0.717,
+      "recommendation_reason": "Strong spec match. Highly rated (4.5⭐). In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "a248046b6156",
+      "title": "Wayne Dalton 16x7 White Insulated Steel Garage Door",
+      "price_cents": 130000,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 120,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Wayne+Dalton+16x7+White+Insulated+Steel+Garage+Door",
+      "image_url": "",
+      "asin_or_sku": "WD-16X7-INSULATED-WHITE",
+      "match_score": 0.595,
+      "recommendation_reason": "Strong spec match. Highly rated (4.6⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "c0a33bba979c",
+      "title": "Amarr 16x7 Heritage Series White Insulated Garage Door",
+      "price_cents": 115000,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 95,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Amarr+16x7+Heritage+Series+White+Insulated+Garage+Door",
+      "image_url": "",
+      "asin_or_sku": "AMR-16X7-HERITAGE-WHITE",
+      "match_score": 0.5,
+      "recommendation_reason": "Good price. In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

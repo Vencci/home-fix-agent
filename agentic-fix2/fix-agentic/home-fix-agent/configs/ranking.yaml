@@ -1,0 +1,7 @@
+# Product ranking weights
+weights:
+  spec_match: 0.40
+  rating: 0.20
+  price: 0.20
+  availability: 0.10
+  review_count: 0.10

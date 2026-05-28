@@ -1,0 +1,131 @@
+{
+  "session": {
+    "session_id": "49d29cfdbf28",
+    "created_at": "2026-05-02T05:07:15.354677Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/844ede4aa4ed/photo.jpg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-05-02T05:07:15.354784Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **towel bar** — loose mounting on one side (90% confidence)\n\nThe towel bar is partially detached from the wall, with one side securely mounted while the other side appears loose. There is some visible wear on the mounting area, indicating it may need to be re-secured or replaced.",
+      "timestamp": "2026-05-02T05:07:24.735918Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What is the exact length of the towel bar?\n- Is the mounting hardware included with the replacement?",
+      "timestamp": "2026-05-02T05:07:30.321059Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard stainless steel towel bar brushed nickel",
+      "timestamp": "2026-05-02T05:07:30.321076Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-05-02T05:07:37.721036Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "81ec025f4511",
+    "session_id": "49d29cfdbf28",
+    "item_category": "towel bar",
+    "problem_type": "loose mounting on one side",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The towel bar is partially detached from the wall, with one side securely mounted while the other side appears loose. There is some visible wear on the mounting area, indicating it may need to be re-secured or replaced.",
+    "confidence": 0.9,
+    "difficulty_score": 2,
+    "difficulty_summary": "1 person, 10-30 minutes, basic tools needed",
+    "required_tools": [
+      "Phillips screwdriver",
+      "level",
+      "drill (if re-mounting)"
+    ]
+  },
+  "spec": {
+    "spec_id": "c0f3a220fc0a",
+    "session_id": "49d29cfdbf28",
+    "item_category": "towel bar",
+    "attributes": {
+      "item_type": "towel bar",
+      "size": "standard",
+      "material": "stainless steel",
+      "color_finish": "brushed nickel"
+    },
+    "confidence_per_field": {
+      "item_type": 1.0,
+      "size": 0.7,
+      "material": 1.0,
+      "color_finish": 0.8
+    },
+    "clarification_questions": [
+      "What is the exact length of the towel bar?",
+      "Is the mounting hardware included with the replacement?"
+    ],
+    "search_query": "standard stainless steel towel bar brushed nickel"
+  },
+  "products": [
+    {
+      "result_id": "fb2eab000b60",
+      "title": "Delta 24-Inch Brushed Nickel Towel Bar",
+      "price_cents": 1999,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 200,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Delta+24-Inch+Brushed+Nickel+Towel+Bar",
+      "image_url": "",
+      "asin_or_sku": "75024-SS",
+      "match_score": 0.729,
+      "recommendation_reason": "Highly rated (4.6⭐). Good price. In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "fcf9fd832950",
+      "title": "Kohler 24-Inch Brushed Nickel Towel Bar",
+      "price_cents": 2799,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 120,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Kohler+24-Inch+Brushed+Nickel+Towel+Bar",
+      "image_url": "",
+      "asin_or_sku": "K-10579-SN",
+      "match_score": 0.529,
+      "recommendation_reason": "Highly rated (4.7⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "15203e21da3e",
+      "title": "Moen 24-Inch Brushed Nickel Towel Bar",
+      "price_cents": 2499,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Moen+24-Inch+Brushed+Nickel+Towel+Bar",
+      "image_url": "",
+      "asin_or_sku": "DN8408BN",
+      "match_score": 0.441,
+      "recommendation_reason": "Highly rated (4.5⭐). In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

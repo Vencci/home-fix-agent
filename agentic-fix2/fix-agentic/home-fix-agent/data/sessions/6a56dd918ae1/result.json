@@ -1,0 +1,151 @@
+{
+  "session": {
+    "session_id": "6a56dd918ae1",
+    "created_at": "2026-04-29T16:59:09.979038Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/53b75c94849a/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T16:59:09.979142Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with a damaged door that is partially detached and leaning to one side. The door appears to be broken and is not functioning properly, as it is misaligned with the garage opening. There is also a refrigerator visible next to the garage.",
+      "timestamp": "2026-04-29T16:59:13.941144Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the door insulated or non-insulated?\n- What type of garage door opener is currently installed?",
+      "timestamp": "2026-04-29T16:59:17.937890Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard white steel garage door replacement",
+      "timestamp": "2026-04-29T16:59:17.937905Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T16:59:25.608174Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want a black one",
+      "timestamp": "2026-04-29T17:00:04.624797Z",
+      "stage": "results"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door opening?\n- Do you want an insulated door or is non-insulated acceptable?\n- What type of garage door mechanism do you prefer (manual or automatic)?",
+      "timestamp": "2026-04-29T17:00:10.728909Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: black sectional steel garage door standard size",
+      "timestamp": "2026-04-29T17:00:10.728925Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T17:00:16.331594Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "0b35f20f2faa",
+    "session_id": "6a56dd918ae1",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with a damaged door that is partially detached and leaning to one side. The door appears to be broken and is not functioning properly, as it is misaligned with the garage opening. There is also a refrigerator visible next to the garage.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "888f3bcfcaf3",
+    "session_id": "6a56dd918ae1",
+    "item_category": "garage door",
+    "attributes": {
+      "color": "black",
+      "type": "sectional",
+      "material": "steel",
+      "size": "standard",
+      "insulated": false
+    },
+    "confidence_per_field": {
+      "color": 1.0,
+      "type": 0.7,
+      "material": 0.7,
+      "size": 0.7,
+      "insulated": 0.5
+    },
+    "clarification_questions": [
+      "What are the exact dimensions of the garage door opening?",
+      "Do you want an insulated door or is non-insulated acceptable?",
+      "What type of garage door mechanism do you prefer (manual or automatic)?"
+    ],
+    "search_query": "black sectional steel garage door standard size"
+  },
+  "products": [
+    {
+      "result_id": "39dc03ee385d",
+      "title": "Amarr 16x7 Black Sectional Garage Door",
+      "price_cents": 115000,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 200,
+      "availability": "in_stock",
+      "url": "https://www.homedepot.com/p/Amarr-16-ft-x-7-ft-Black-Sectional-Garage-Door-1234567890",
+      "image_url": "https://images.example.com/amarr_black_sectional.jpg",
+      "asin_or_sku": "1234567890",
+      "match_score": 0.829,
+      "recommendation_reason": "Highly rated (4.7⭐). Good price. In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "b202fbea2cb9",
+      "title": "Wayne Dalton 16x7 Black Steel Garage Door",
+      "price_cents": 125000,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 180,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B09ABC5678",
+      "image_url": "https://images.example.com/wayne_dalton_black.jpg",
+      "asin_or_sku": "B09ABC5678",
+      "match_score": 0.489,
+      "recommendation_reason": "Highly rated (4.6⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "2e9330059db9",
+      "title": "Clopay 16x7 Black Steel Garage Door",
+      "price_cents": 120000,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B08XYZ1234",
+      "image_url": "https://images.example.com/clopay_black_steel.jpg",
+      "asin_or_sku": "B08XYZ1234",
+      "match_score": 0.429,
+      "recommendation_reason": "Highly rated (4.5⭐). In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

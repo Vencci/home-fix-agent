@@ -1,0 +1,13 @@
+# Supported item categories and their spec fields
+bulb:
+  required: [base_type, wattage_equivalent, color_temperature_k, shape, technology]
+  optional: [dimmable, finish]
+battery:
+  required: [size]
+  optional: [chemistry, voltage, quantity]
+filter:
+  required: [length_inches, width_inches, depth_inches]
+  optional: [merv_rating]
+hardware:
+  required: [item_type, size]
+  optional: [material, color_finish]

@@ -1,0 +1,39 @@
+{
+  "session": {
+    "session_id": "5caf2e6358d7",
+    "created_at": "2026-04-29T05:17:25.750290Z",
+    "status": "active",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/4139729697a4/photo.jpeg",
+    "description": ""
+  },
+  "stage": "error",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T05:17:25.750389Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Analysis failed: Connection error.",
+      "timestamp": "2026-04-29T05:17:30.247183Z",
+      "stage": "error"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "91e22e508739",
+    "session_id": "5caf2e6358d7",
+    "item_category": "",
+    "problem_type": "",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "Analysis failed: Connection error.",
+    "confidence": 0.0
+  },
+  "spec": null,
+  "products": [],
+  "order": null,
+  "error": "Analysis failed: Connection error."
+}

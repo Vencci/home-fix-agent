@@ -1,0 +1,148 @@
+{
+  "session": {
+    "session_id": "826e8e4a10e6",
+    "created_at": "2026-04-29T16:38:42.696162Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/0a86e3ff9301/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T16:38:42.696315Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with a damaged door that is partially collapsed and hanging unevenly. The door appears to be misaligned and is not functioning properly, indicating a significant structural issue. There is also a refrigerator visible next to the garage.",
+      "timestamp": "2026-04-29T16:38:49.181458Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What is the exact size of the garage door (height and width)?\n- Is there a specific brand or model of the garage door that needs to be matched?\n- What type of opening mechanism does the garage door use (manual or automatic)?",
+      "timestamp": "2026-04-29T16:38:59.392250Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard white steel overhead garage door",
+      "timestamp": "2026-04-29T16:38:59.392268Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T16:39:05.541029Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want black",
+      "timestamp": "2026-04-29T16:39:15.675182Z",
+      "stage": "results"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What is the exact size of the garage door opening?\n- Do you have a preference for the material (steel, fiberglass, etc.)?",
+      "timestamp": "2026-04-29T16:39:20.263123Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: black overhead garage door standard residential size",
+      "timestamp": "2026-04-29T16:39:20.263137Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T16:39:27.236841Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "7ebb0f40af53",
+    "session_id": "826e8e4a10e6",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with a damaged door that is partially collapsed and hanging unevenly. The door appears to be misaligned and is not functioning properly, indicating a significant structural issue. There is also a refrigerator visible next to the garage.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "1c8ae6791e75",
+    "session_id": "826e8e4a10e6",
+    "item_category": "garage door",
+    "attributes": {
+      "color_finish": "black",
+      "item_type": "overhead garage door",
+      "size": "standard residential size (approx. 16x7 feet)",
+      "material": "steel or fiberglass"
+    },
+    "confidence_per_field": {
+      "color_finish": 1.0,
+      "item_type": 1.0,
+      "size": 0.7,
+      "material": 0.7
+    },
+    "clarification_questions": [
+      "What is the exact size of the garage door opening?",
+      "Do you have a preference for the material (steel, fiberglass, etc.)?"
+    ],
+    "search_query": "black overhead garage door standard residential size"
+  },
+  "products": [
+    {
+      "result_id": "e224f41de71d",
+      "title": "Amarr 16x7 Black Carriage House Garage Door",
+      "price_cents": 1350,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 200,
+      "availability": "in_stock",
+      "url": "https://www.homedepot.com/p/Amarr-16-ft-x-7-ft-Black-Carriage-House-Garage-Door-16X7-Black/202123456",
+      "image_url": "https://images.homedepot-static.com/productImages/12345678/16e2e8e6-1e1b-4c9d-8b3d-1234567890ab/svn/black-amarr-garage-doors-202123456-64_1000.jpg",
+      "asin_or_sku": "202123456",
+      "match_score": 0.651,
+      "recommendation_reason": "Highly rated (4.7⭐). In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "109f7d8d46c8",
+      "title": "Clopay 16x7 Black Steel Garage Door",
+      "price_cents": 1200,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B08XYZ1234",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/81Z5W9cZ1tL._AC_SL1500_.jpg",
+      "asin_or_sku": "B08XYZ1234",
+      "match_score": 0.471,
+      "recommendation_reason": "Highly rated (4.5⭐). Good price. In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "8af2b9d937a7",
+      "title": "Wayne Dalton 16x7 Black Insulated Garage Door",
+      "price_cents": 1450,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 180,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B09ABC5678",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/91abcdeF1tL._AC_SL1500_.jpg",
+      "asin_or_sku": "B09ABC5678",
+      "match_score": 0.431,
+      "recommendation_reason": "Highly rated (4.6⭐). In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

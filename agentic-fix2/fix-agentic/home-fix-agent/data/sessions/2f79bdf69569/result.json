@@ -1,0 +1,131 @@
+{
+  "session": {
+    "session_id": "2f79bdf69569",
+    "created_at": "2026-05-02T05:24:16.370493Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/3582b8e7d48c/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-05-02T05:24:16.370606Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **garage door panel** — misaligned and damaged (90% confidence)\n\nThe garage door panel is significantly misaligned and appears to be damaged, with one side sagging and not closing properly. This issue may prevent the door from functioning as intended and could pose security risks.",
+      "timestamp": "2026-05-02T05:24:22.144965Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door panel?\n- Is the current panel insulated or non-insulated?\n- What is the specific color or finish of the existing panel?",
+      "timestamp": "2026-05-02T05:24:28.368294Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: replacement garage door panel standard residential white steel fiberglass",
+      "timestamp": "2026-05-02T05:24:28.368314Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-05-02T05:24:33.492454Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "05e1cd16f4be",
+    "session_id": "2f79bdf69569",
+    "item_category": "garage door panel",
+    "problem_type": "misaligned and damaged",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The garage door panel is significantly misaligned and appears to be damaged, with one side sagging and not closing properly. This issue may prevent the door from functioning as intended and could pose security risks.",
+    "confidence": 0.9,
+    "difficulty_score": 4,
+    "difficulty_summary": "1-2 people, half day, significant DIY skill needed",
+    "required_tools": [
+      "screwdriver",
+      "adjustable wrench",
+      "level",
+      "safety goggles"
+    ]
+  },
+  "spec": {
+    "spec_id": "1207aef0e483",
+    "session_id": "2f79bdf69569",
+    "item_category": "garage door panel",
+    "attributes": {
+      "size": "standard residential",
+      "material": "steel or fiberglass",
+      "color_finish": "white"
+    },
+    "confidence_per_field": {
+      "size": 0.8,
+      "material": 0.7,
+      "color_finish": 0.9
+    },
+    "clarification_questions": [
+      "What are the exact dimensions of the garage door panel?",
+      "Is the current panel insulated or non-insulated?",
+      "What is the specific color or finish of the existing panel?"
+    ],
+    "search_query": "replacement garage door panel standard residential white steel fiberglass"
+  },
+  "products": [
+    {
+      "result_id": "d3be99bcd93d",
+      "title": "Clopay 16x7 White Steel Garage Door Panel",
+      "price_cents": 19900,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 120,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Clopay+16x7+White+Steel+Garage+Door+Panel",
+      "image_url": "",
+      "asin_or_sku": "CP16X7W",
+      "match_score": 0.644,
+      "recommendation_reason": "Highly rated (4.5⭐). In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "c79d2f5e9a0d",
+      "title": "Amarr 16x7 White Steel Garage Door Panel",
+      "price_cents": 18500,
+      "currency": "USD",
+      "rating": 4.3,
+      "review_count": 95,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Amarr+16x7+White+Steel+Garage+Door+Panel",
+      "image_url": "",
+      "asin_or_sku": "AM16X7W",
+      "match_score": 0.56,
+      "recommendation_reason": "Good price. In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "904df5a87d67",
+      "title": "Wayne Dalton 16x7 White Steel Garage Door Panel",
+      "price_cents": 21000,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 80,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Wayne+Dalton+16x7+White+Steel+Garage+Door+Panel",
+      "image_url": "",
+      "asin_or_sku": "WD16X7W",
+      "match_score": 0.522,
+      "recommendation_reason": "Highly rated (4.6⭐). In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

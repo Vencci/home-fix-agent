@@ -1,0 +1,148 @@
+{
+  "session": {
+    "session_id": "698bb5387268",
+    "created_at": "2026-04-29T16:47:47.857157Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/a6b22a074665/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T16:47:47.857268Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with two doors, one of which is significantly misaligned and appears to be broken. The door is partially open and sagging, indicating a structural issue. The surrounding area includes a driveway and a refrigerator positioned nearby.",
+      "timestamp": "2026-04-29T16:47:51.646852Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the garage door insulated or non-insulated?\n- What type of garage door opener is currently installed?",
+      "timestamp": "2026-04-29T16:47:54.740439Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard white steel garage door replacement",
+      "timestamp": "2026-04-29T16:47:54.740476Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T16:47:59.959774Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want black",
+      "timestamp": "2026-04-29T16:48:47.058210Z",
+      "stage": "results"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the door insulated or non-insulated?",
+      "timestamp": "2026-04-29T16:48:52.811123Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: black steel garage door standard size",
+      "timestamp": "2026-04-29T16:48:52.811133Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T16:48:59.296882Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "faa5553851ec",
+    "session_id": "698bb5387268",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with two doors, one of which is significantly misaligned and appears to be broken. The door is partially open and sagging, indicating a structural issue. The surrounding area includes a driveway and a refrigerator positioned nearby.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "93550346bb50",
+    "session_id": "698bb5387268",
+    "item_category": "garage door",
+    "attributes": {
+      "item_type": "garage door",
+      "size": "standard",
+      "material": "steel",
+      "color_finish": "black"
+    },
+    "confidence_per_field": {
+      "item_type": 0.9,
+      "size": 0.5,
+      "material": 0.8,
+      "color_finish": 1.0
+    },
+    "clarification_questions": [
+      "What are the exact dimensions of the garage door?",
+      "Is the door insulated or non-insulated?"
+    ],
+    "search_query": "black steel garage door standard size"
+  },
+  "products": [
+    {
+      "result_id": "78140d827131",
+      "title": "Amarr 16x7 Black Steel Garage Door",
+      "price_cents": 239900,
+      "currency": "USD",
+      "rating": 4.6,
+      "review_count": 95,
+      "availability": "in_stock",
+      "url": "https://www.homedepot.com/p/Amarr-16x7-Black-Steel-Garage-Door-1234567890",
+      "image_url": "https://images.example.com/amarr_black_steel.jpg",
+      "asin_or_sku": "1234567890",
+      "match_score": 0.711,
+      "recommendation_reason": "Strong spec match. Highly rated (4.6⭐). Good price. In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "8a9ca235077c",
+      "title": "Clopay 16x7 Black Steel Garage Door",
+      "price_cents": 249900,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 120,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B08XYZ1234",
+      "image_url": "https://images.example.com/clopay_black_steel.jpg",
+      "asin_or_sku": "B08XYZ1234",
+      "match_score": 0.567,
+      "recommendation_reason": "Strong spec match. Highly rated (4.5⭐). In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "b5b8ba136bd1",
+      "title": "Wayne Dalton 16x7 Black Steel Garage Door",
+      "price_cents": 259900,
+      "currency": "USD",
+      "rating": 4.7,
+      "review_count": 75,
+      "availability": "in_stock",
+      "url": "https://www.amazon.com/dp/B09ABC5678",
+      "image_url": "https://images.example.com/wayne_dalton_black_steel.jpg",
+      "asin_or_sku": "B09ABC5678",
+      "match_score": 0.567,
+      "recommendation_reason": "Strong spec match. Highly rated (4.7⭐). In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

@@ -1,0 +1,189 @@
+{
+  "session": {
+    "session_id": "d0f3e2be755a",
+    "created_at": "2026-04-29T17:32:49.590274Z",
+    "status": "completed",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/b90f075ac401/photo.jpeg",
+    "description": ""
+  },
+  "stage": "results",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Analyzing your photo...",
+      "timestamp": "2026-04-29T17:32:49.590413Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "Identified: **other** — broken (90% confidence)\n\nThe image shows a garage with two doors, one of which is severely misaligned and partially detached from its frame. The door appears to be broken and is hanging at an angle, indicating a significant issue with the garage door mechanism. There is also a refrigerator visible next to the garage.",
+      "timestamp": "2026-04-29T17:32:53.816882Z",
+      "stage": "analyzing"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the exact dimensions of the garage door?\n- Is the door insulated or non-insulated?\n- What type of garage door opener is currently installed?",
+      "timestamp": "2026-04-29T17:33:00.729911Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard white steel garage door replacement",
+      "timestamp": "2026-04-29T17:33:00.729952Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T17:33:05.048747Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want black",
+      "timestamp": "2026-04-29T17:39:39.034099Z",
+      "stage": "results"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- What are the dimensions of the garage door opening?\n- Is there a specific style of garage door you prefer (e.g., panel, carriage house)?",
+      "timestamp": "2026-04-29T17:39:44.077357Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: black overhead garage door standard size steel",
+      "timestamp": "2026-04-29T17:39:44.077375Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T17:39:49.760892Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want item type: garage door window, color finish: white",
+      "timestamp": "2026-04-29T19:17:13.072335Z",
+      "stage": "results"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: white garage door window",
+      "timestamp": "2026-04-29T19:17:16.803650Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T19:17:20.263917Z",
+      "stage": "results"
+    },
+    {
+      "role": "user",
+      "content": "I want size: standard, material: steel, color finish: black, item type: overhead garage door, size: standard, material: steel, color finish: yellow",
+      "timestamp": "2026-04-29T19:17:29.211572Z",
+      "stage": "results"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm searching with best-effort specs. To improve results, you can answer:\n\n- Is the desired color finish for the garage door definitely yellow, or is there flexibility in color?",
+      "timestamp": "2026-04-29T19:17:33.805201Z",
+      "stage": "clarifying"
+    },
+    {
+      "role": "system",
+      "content": "Searching for: standard steel overhead garage door yellow",
+      "timestamp": "2026-04-29T19:17:33.805222Z",
+      "stage": "searching"
+    },
+    {
+      "role": "assistant",
+      "content": "Found 3 products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
+      "timestamp": "2026-04-29T19:17:37.247369Z",
+      "stage": "results"
+    }
+  ],
+  "analysis": {
+    "analysis_id": "a954ee595ce9",
+    "session_id": "d0f3e2be755a",
+    "item_category": "other",
+    "problem_type": "broken",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "The image shows a garage with two doors, one of which is severely misaligned and partially detached from its frame. The door appears to be broken and is hanging at an angle, indicating a significant issue with the garage door mechanism. There is also a refrigerator visible next to the garage.",
+    "confidence": 0.9
+  },
+  "spec": {
+    "spec_id": "0d14c010b829",
+    "session_id": "d0f3e2be755a",
+    "item_category": "garage door",
+    "attributes": {
+      "item_type": "overhead garage door",
+      "size": "standard",
+      "material": "steel",
+      "color_finish": "yellow"
+    },
+    "confidence_per_field": {
+      "item_type": 1.0,
+      "size": 1.0,
+      "material": 1.0,
+      "color_finish": 0.7
+    },
+    "clarification_questions": [
+      "Is the desired color finish for the garage door definitely yellow, or is there flexibility in color?"
+    ],
+    "search_query": "standard steel overhead garage door yellow"
+  },
+  "products": [
+    {
+      "result_id": "a362eb5688e9",
+      "title": "Clopay 16x7 Standard Steel Garage Door - Yellow",
+      "price_cents": 120000,
+      "currency": "USD",
+      "rating": 4.5,
+      "review_count": 150,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Clopay+16x7+Standard+Steel+Garage+Door+-+Yellow",
+      "image_url": "",
+      "asin_or_sku": "CLO-16YELLOW",
+      "match_score": 0.867,
+      "recommendation_reason": "Strong spec match. Highly rated (4.5⭐). In stock",
+      "rank": 1
+    },
+    {
+      "result_id": "1b7d2679c9c2",
+      "title": "Wayne Dalton 8000 Series 16x7 Steel Garage Door - Yellow",
+      "price_cents": 115000,
+      "currency": "USD",
+      "rating": 4.2,
+      "review_count": 95,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Wayne+Dalton+8000+Series+16x7+Steel+Garage+Door+-+Yellow",
+      "image_url": "",
+      "asin_or_sku": "WD-8000-YELLOW",
+      "match_score": 0.668,
+      "recommendation_reason": "Strong spec match. Good price. In stock",
+      "rank": 2
+    },
+    {
+      "result_id": "5115acda1d43",
+      "title": "Amarr Heritage 16x7 Steel Garage Door - Yellow",
+      "price_cents": 130000,
+      "currency": "USD",
+      "rating": 4.0,
+      "review_count": 80,
+      "availability": "in_stock",
+      "url": "https://www.google.com/search?tbm=shop&q=Amarr+Heritage+16x7+Steel+Garage+Door+-+Yellow",
+      "image_url": "",
+      "asin_or_sku": "AM-16YELLOW",
+      "match_score": 0.367,
+      "recommendation_reason": "Strong spec match. In stock",
+      "rank": 3
+    }
+  ],
+  "order": null,
+  "error": null
+}

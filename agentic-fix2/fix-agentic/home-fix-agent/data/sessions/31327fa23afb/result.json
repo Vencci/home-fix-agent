@@ -1,0 +1,24 @@
+{
+  "session": {
+    "session_id": "31327fa23afb",
+    "created_at": "2026-04-20T01:26:28.755682Z",
+    "status": "active",
+    "photo_path": "/Volumes/workplace/agentic-dev/fix-agentic/home-fix-agent/data/sessions/31327fa23afb/photo.jpg",
+    "description": ""
+  },
+  "analysis": {
+    "analysis_id": "447638a8b596",
+    "session_id": "31327fa23afb",
+    "item_category": "",
+    "problem_type": "",
+    "visible_brand": null,
+    "visible_model": null,
+    "visible_text": [],
+    "description": "Analysis failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-*******************************************************************************************************************************************************XacA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}",
+    "confidence": 0.0
+  },
+  "spec": null,
+  "products": [],
+  "order": null,
+  "error": "Analysis failed: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-*******************************************************************************************************************************************************XacA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'code': 'invalid_api_key', 'param': None}, 'status': 401}"
+}
