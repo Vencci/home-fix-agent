@@ -13,16 +13,26 @@ def _client() -> tuple[OpenAI, str]:
     cfg = get_llm_config()
     return OpenAI(api_key=cfg["api_key"], base_url=cfg["base_url"]), cfg["model"]
 
-def _encode_image(path: str) -> str:
+def encode_image(path: str) -> tuple[str, str]:
+    """Return (base64_string, mime_type) for an image file."""
     data = Path(path).read_bytes()
-    return base64.b64encode(data).decode()
-
-def llm_vision_json(system: str, user_text: str, image_path: str, retries: int = 2) -> dict:
-    """Call LLM with an image, expecting JSON output."""
-    client, model = _client()
-    b64 = _encode_image(image_path)
-    ext = Path(image_path).suffix.lower().lstrip(".")
+    b64 = base64.b64encode(data).decode()
+    ext = Path(path).suffix.lower().lstrip(".")
     mime = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "heic": "image/heic"}.get(ext, "image/jpeg")
+    return b64, mime
+
+def llm_vision_json(system: str, user_text: str, image_path: str, retries: int = 2,
+                    _encoded: tuple[str, str] | None = None) -> dict:
+    """Call LLM with an image, expecting JSON output.
+
+    Pass _encoded=(b64, mime) to avoid re-reading the file when calling multiple times
+    for the same photo.
+    """
+    client, model = _client()
+    if _encoded:
+        b64, mime = _encoded
+    else:
+        b64, mime = encode_image(image_path)
 
     for attempt in range(retries + 1):
         try:

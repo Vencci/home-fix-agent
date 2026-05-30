@@ -7,6 +7,7 @@ from src.models.schemas import (
     ChatMessage, ChatRole, PipelineResult, PipelineStage, Session, SessionStatus,
 )
 from src.storage.store import save_result
+from src.utils.llm import encode_image
 
 logger = logging.getLogger(__name__)
 
@@ -15,23 +16,27 @@ def _msg(role: ChatRole, content: str, stage: str | None = None) -> ChatMessage:
     return ChatMessage(role=role, content=content, stage=stage)
 
 
-def start_session(photo_path: str, description: str = "") -> PipelineResult:
+def start_session(photo_path: str, description: str = "", session_id: str | None = None) -> PipelineResult:
     """Create session and run through analysis + spec extraction, blocking if clarification needed."""
     session = Session(description=description)
+    if session_id:
+        session.session_id = session_id
     result = PipelineResult(session=session, stage=PipelineStage.UPLOAD)
     session.photo_path = photo_path
 
     if description:
         result.messages.append(_msg(ChatRole.USER, description, "upload"))
 
+    encoded = encode_image(photo_path)
+
     # Run analysis
-    result = _run_analysis(result)
+    result = _run_analysis(result, encoded)
     if result.stage == PipelineStage.ERROR:
         save_result(result)
         return result
 
     # Run spec extraction + search (clarification questions shown alongside results)
-    result = _run_spec_extraction(result)
+    result = _run_spec_extraction(result, encoded=encoded)
     save_result(result)
     return result
 
@@ -48,16 +53,15 @@ def advance(result: PipelineResult, user_message: str) -> PipelineResult:
     return result
 
 
-def _run_analysis(result: PipelineResult) -> PipelineResult:
+def _run_analysis(result: PipelineResult, encoded: tuple[str, str] | None = None) -> PipelineResult:
     """Run vision analysis."""
     result.stage = PipelineStage.ANALYZING
-    result.messages.append(_msg(ChatRole.SYSTEM, "Analyzing your photo...", "analyzing"))
 
     photo = result.session.photo_path
     sid = result.session.session_id
     desc = result.session.description
 
-    analysis = vision_analyst.analyze(photo, sid, desc)
+    analysis = vision_analyst.analyze(photo, sid, desc, encoded=encoded)
     result.analysis = analysis
 
     if analysis.confidence == 0.0:
@@ -66,37 +70,21 @@ def _run_analysis(result: PipelineResult) -> PipelineResult:
         result.messages.append(_msg(ChatRole.ASSISTANT, result.error, "error"))
         return result
 
-    conf_pct = f"{analysis.confidence:.0%}"
-    result.messages.append(_msg(
-        ChatRole.ASSISTANT,
-        f"Identified: **{analysis.item_category}** — {analysis.problem_type} ({conf_pct} confidence)\n\n{analysis.description}",
-        "analyzing",
-    ))
     return result
 
 
-def _run_spec_extraction(result: PipelineResult, extra_context: str = "") -> PipelineResult:
+def _run_spec_extraction(result: PipelineResult, extra_context: str = "",
+                         encoded: tuple[str, str] | None = None) -> PipelineResult:
     """Run spec extraction. Shows clarification questions but proceeds to search regardless."""
     photo = result.session.photo_path
-    spec = spec_extractor.extract(result.analysis, photo, extra_context)
+    spec = spec_extractor.extract(result.analysis, photo, extra_context, encoded=encoded)
     result.spec = spec
-
-    # Show clarification questions as suggestions, but don't block
-    if spec.clarification_questions:
-        questions = "\n".join(f"- {q}" for q in spec.clarification_questions)
-        result.messages.append(_msg(
-            ChatRole.ASSISTANT,
-            f"I'm searching with best-effort specs. To improve results, you can answer:\n\n{questions}",
-            "clarifying",
-        ))
-
     return _run_search(result)
 
 
 def _run_search(result: PipelineResult) -> PipelineResult:
     """Search for products and rank them."""
     result.stage = PipelineStage.SEARCHING
-    result.messages.append(_msg(ChatRole.SYSTEM, f"Searching for: {result.spec.search_query}", "searching"))
 
     products = product_searcher.search(result.spec)
     if not products:
@@ -113,11 +101,6 @@ def _run_search(result: PipelineResult) -> PipelineResult:
     if result.analysis:
         result.cost_estimate = cost_estimator.estimate(result.analysis, result.products)
 
-    result.messages.append(_msg(
-        ChatRole.ASSISTANT,
-        f"Found {len(result.products)} products. You can select one to order, or tell me if you'd like something different (e.g. \"I need dimmable\" or \"show me cheaper options\").",
-        "results",
-    ))
     return result
 
 
@@ -165,6 +148,49 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
             ))
 
     return result
+
+
+def stream_session(photo_path: str, description: str = "", session_id: str | None = None):
+    """Generator that yields (event_type, PipelineResult) as each stage completes.
+
+    Yields: "analysis", "spec", "products", "done", or "error".
+    """
+    session = Session(description=description)
+    if session_id:
+        session.session_id = session_id
+    result = PipelineResult(session=session, stage=PipelineStage.UPLOAD)
+    session.photo_path = photo_path
+
+    if description:
+        result.messages.append(_msg(ChatRole.USER, description, "upload"))
+
+    encoded = encode_image(photo_path)
+
+    result = _run_analysis(result, encoded)
+    if result.stage == PipelineStage.ERROR:
+        save_result(result)
+        yield "error", result
+        return
+
+    yield "analysis", result
+
+    photo = result.session.photo_path
+    result.spec = spec_extractor.extract(result.analysis, photo, encoded=encoded)
+    yield "spec", result
+
+    result = _run_search(result)
+    if result.stage == PipelineStage.ERROR:
+        save_result(result)
+        yield "error", result
+        return
+
+    yield "products", result
+
+    if result.analysis:
+        result.cost_estimate = cost_estimator.estimate(result.analysis, result.products)
+
+    save_result(result)
+    yield "done", result
 
 
 def _diff_specs(old: dict, new: dict) -> list[tuple[str, str, str]]:

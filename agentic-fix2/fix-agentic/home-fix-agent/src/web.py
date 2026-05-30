@@ -1,5 +1,8 @@
 """Web UI: FastAPI server with chat-driven interface."""
 from __future__ import annotations
+import asyncio
+import json
+import re
 import shutil
 import tempfile
 import time
@@ -7,18 +10,35 @@ from collections import defaultdict
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Request, UploadFile
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from src.agents import order_manager
 from src.intake.photo import validate_and_store
 from src.models.schemas import PipelineResult, PipelineStage, Session
-from src.pipeline import advance, start_session
+from src.pipeline import advance, start_session, stream_session
 from src.storage.store import list_sessions, load_result, save_result
 from src.utils.config import STATIC_DIR
 
+# Sentinel used to detect generator exhaustion without raising StopIteration
+# across asyncio Future boundaries (Python 3.7+ converts StopIteration → RuntimeError).
+_STREAM_DONE = object()
+
+
+def _next_stream_event(gen):
+    """Advance the stream_session generator; returns _STREAM_DONE when exhausted."""
+    try:
+        return next(gen)
+    except StopIteration:
+        return _STREAM_DONE
+
 app = FastAPI(title="Home Fix Agent")
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+_SESSION_ID_RE = re.compile(r"^[a-f0-9]{12}$")
+
+def _valid_session_id(sid: str) -> bool:
+    return bool(_SESSION_ID_RE.match(sid))
 
 # Rate limiter: 2 requests per 60 seconds per IP
 _RATE_LIMIT = 2
@@ -63,9 +83,71 @@ async def analyze(request: Request, photo: UploadFile = File(...), description: 
     finally:
         Path(tmp_path).unlink(missing_ok=True)
 
-    # Run incremental pipeline (blocks at clarification if needed)
-    result = start_session(stored, description)
+    # Run incremental pipeline, reusing the same session ID so photo and result share one directory
+    result = start_session(stored, description, session_id=sid)
     return JSONResponse(result.model_dump(mode="json"))
+
+
+@app.post("/analyze-stream")
+async def analyze_stream(request: Request, photo: UploadFile = File(...), description: str = Form("")):
+    """Start a new session and stream progress as SSE events, one per pipeline stage."""
+    if err := _check_rate_limit(request):
+        return JSONResponse({"error": err}, status_code=429)
+    suffix = Path(photo.filename or "photo.jpg").suffix
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        shutil.copyfileobj(photo.file, tmp)
+        tmp_path = tmp.name
+
+    session = Session(description=description)
+    sid = session.session_id
+    try:
+        stored = validate_and_store(tmp_path, sid)
+    except (FileNotFoundError, ValueError) as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+    finally:
+        Path(tmp_path).unlink(missing_ok=True)
+
+    async def event_stream():
+        loop = asyncio.get_running_loop()
+        gen = stream_session(stored, description, session_id=sid)
+        while True:
+            try:
+                item = await loop.run_in_executor(None, _next_stream_event, gen)
+                if item is _STREAM_DONE:
+                    break
+                event_type, result = item
+                if event_type == "analysis":
+                    payload = {
+                        "type": "analysis",
+                        "session_id": result.session.session_id,
+                        "analysis": result.analysis.model_dump(mode="json") if result.analysis else None,
+                        "stage": result.stage.value,
+                        "error": result.error,
+                    }
+                elif event_type == "spec":
+                    payload = {"type": "spec", "spec": result.spec.model_dump(mode="json") if result.spec else None}
+                elif event_type == "products":
+                    payload = {
+                        "type": "products",
+                        "session_id": result.session.session_id,
+                        "products": [p.model_dump(mode="json") for p in result.products],
+                    }
+                elif event_type == "done":
+                    payload = {"type": "done", "result": result.model_dump(mode="json")}
+                elif event_type == "error":
+                    payload = {"type": "error", "message": result.error or "Unknown error"}
+                else:
+                    continue
+                yield f"data: {json.dumps(payload)}\n\n"
+            except Exception as e:
+                yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
+                break
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 @app.post("/chat")
@@ -73,6 +155,8 @@ async def chat(request: Request, session_id: str = Form(...), message: str = For
     """Send a message to an existing session to advance the pipeline."""
     if err := _check_rate_limit(request):
         return JSONResponse({"error": err}, status_code=429)
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
     result = load_result(session_id)
     if not result:
         return JSONResponse({"error": "Session not found"}, status_code=404)
@@ -86,6 +170,8 @@ async def place_order(request: Request, session_id: str = Form(...), product_ind
     """Place an order for a selected product."""
     if err := _check_rate_limit(request):
         return JSONResponse({"error": err}, status_code=429)
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
     r = load_result(session_id)
     if not r or product_index < 0 or product_index >= len(r.products):
         return JSONResponse({"error": "Invalid session or product"}, status_code=400)
@@ -106,6 +192,8 @@ async def history():
 
 @app.get("/session/{session_id}")
 async def get_session(session_id: str):
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
     r = load_result(session_id)
     if not r:
         return JSONResponse({"error": "Not found"}, status_code=404)
@@ -115,6 +203,8 @@ async def get_session(session_id: str):
 @app.get("/session/{session_id}/photo")
 async def get_photo(session_id: str):
     """Serve the session's uploaded photo."""
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
     r = load_result(session_id)
     if not r or not r.session.photo_path:
         return JSONResponse({"error": "Not found"}, status_code=404)

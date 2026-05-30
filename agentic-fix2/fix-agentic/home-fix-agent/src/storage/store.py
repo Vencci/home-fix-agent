@@ -2,7 +2,6 @@
 from __future__ import annotations
 import json
 from pathlib import Path
-from pydantic import BaseModel
 from src.models.schemas import PipelineResult
 from src.utils.config import sessions_dir
 
@@ -23,29 +22,31 @@ def save_result(result: PipelineResult) -> Path:
 
 def load_result(session_id: str) -> PipelineResult | None:
     """Load a pipeline result from a session directory."""
-    path = _session_dir(session_id) / "result.json"
+    path = sessions_dir() / session_id / "result.json"
     if not path.exists():
         return None
     return PipelineResult.model_validate_json(path.read_text())
 
 
 def list_sessions() -> list[dict]:
-    """List all sessions with basic info."""
+    """List all sessions with basic info, sorted newest first."""
     results = []
-    for d in sorted(sessions_dir().iterdir(), reverse=True):
+    for d in sessions_dir().iterdir():
         if not d.is_dir():
             continue
         rfile = d / "result.json"
         if rfile.exists():
             try:
-                r = PipelineResult.model_validate_json(rfile.read_text())
+                raw = json.loads(rfile.read_text())
+                session = raw.get("session", {})
+                analysis = raw.get("analysis") or {}
                 results.append({
-                    "session_id": r.session.session_id,
-                    "created_at": r.session.created_at.isoformat(),
-                    "status": r.session.status.value,
-                    "category": r.analysis.item_category if r.analysis else "",
-                    "picks": len(r.products),
+                    "session_id": session.get("session_id", d.name),
+                    "created_at": session.get("created_at", ""),
+                    "status": session.get("status", "unknown"),
+                    "category": analysis.get("item_category", ""),
                 })
             except Exception:
-                results.append({"session_id": d.name, "status": "corrupt"})
+                results.append({"session_id": d.name, "status": "corrupt", "created_at": ""})
+    results.sort(key=lambda x: x.get("created_at", ""), reverse=True)
     return results

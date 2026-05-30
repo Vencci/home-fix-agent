@@ -26,7 +26,8 @@ Rules:
 Return JSON: {"item_category": "string", "attributes": {}, "confidence_per_field": {}, "clarification_questions": ["string"], "search_query": "string"}"""
 
 
-def extract(analysis: IssueAnalysis, photo_path: str, extra_context: str = "") -> ProductSpec:
+def extract(analysis: IssueAnalysis, photo_path: str, extra_context: str = "",
+            encoded: tuple[str, str] | None = None) -> ProductSpec:
     """Extract product specs from analysis + photo."""
     system = load_prompt("spec_extractor") or _DEFAULT_SYSTEM
     user_text = (
@@ -41,7 +42,7 @@ def extract(analysis: IssueAnalysis, photo_path: str, extra_context: str = "") -
         user_text += f"\nAdditional info from user: {extra_context}"
 
     try:
-        result = llm_vision_json(system, user_text, photo_path)
+        result = llm_vision_json(system, user_text, photo_path, _encoded=encoded)
         return ProductSpec(
             session_id=analysis.session_id,
             item_category=result.get("item_category", analysis.item_category),

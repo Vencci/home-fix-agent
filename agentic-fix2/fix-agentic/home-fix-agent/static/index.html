@@ -5,102 +5,149 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home Fix Agent</title>
 <style>
+  /* ============================================================
+     WARM HOME FIX — Design System Tokens
+     Palette: warm off-white · amber · clay · slate-brown
+     ============================================================ */
   :root {
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --primary-light: #eef2ff;
-    --primary-surface: #f5f3ff;
-    --accent: #10b981;
-    --accent-hover: #059669;
+    /* Primary: warm amber-orange */
+    --primary: #d97706;
+    --primary-hover: #b45309;
+    --primary-light: #fef3c7;
+    --primary-surface: #fffbeb;
+
+    /* Accent: earthy sage green */
+    --accent: #059669;
+    --accent-hover: #047857;
     --accent-light: #ecfdf5;
-    --surface: #ffffff;
-    --surface-secondary: #f8fafc;
-    --surface-tertiary: #f1f5f9;
-    --border: #e2e8f0;
-    --border-light: #f1f5f9;
-    --text: #1e293b;
-    --text-secondary: #64748b;
-    --text-tertiary: #94a3b8;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-    --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+
+    /* Surfaces: warm off-whites, never cold gray */
+    --surface: #fffef9;
+    --surface-secondary: #faf8f4;
+    --surface-tertiary: #f2ede6;
+
+    /* Borders: warm, not icy */
+    --border: #e5d9c8;
+    --border-light: #f0e9de;
+
+    /* Text: slate-brown warmth */
+    --text: #2c1f0e;
+    --text-secondary: #6b5744;
+    --text-tertiary: #a08c76;
+
+    /* Semantic */
+    --danger: #dc2626;
+    --warning: #d97706;
+
+    /* Shadows: amber-tinted, soft */
+    --shadow-sm: 0 1px 3px rgba(120,80,20,0.06);
+    --shadow: 0 2px 6px rgba(120,80,20,0.09), 0 1px 2px rgba(120,80,20,0.06);
+    --shadow-md: 0 4px 12px rgba(120,80,20,0.10), 0 2px 4px rgba(120,80,20,0.07);
+    --shadow-lg: 0 10px 28px rgba(120,80,20,0.12), 0 4px 8px rgba(120,80,20,0.08);
+
+    /* Shape */
     --radius: 12px;
-    --radius-lg: 16px;
-    --radius-sm: 8px;
-    --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 18px;
+    --radius-sm: 9px;
+
+    /* Motion */
+    --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
     background: var(--surface-secondary);
     color: var(--text);
     height: 100vh;
     display: flex;
     flex-direction: column;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Scrollbar */
+  /* Scrollbar — warm tone */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
-  /* Header */
+  /* ============================================================
+     HEADER
+     ============================================================ */
   .header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    padding: 14px 24px;
+    padding: 14px 28px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     flex-shrink: 0;
     z-index: 10;
+    box-shadow: var(--shadow-sm);
   }
   .header-logo {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--primary), #a855f7);
-    border-radius: 10px;
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, #d97706, #b45309);
+    border-radius: 11px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
+    font-size: 19px;
     color: #fff;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(180,83,9,0.30);
   }
-  .header h1 { font-size: 1.1em; font-weight: 700; color: var(--text); }
-  .header .subtitle { color: var(--text-tertiary); font-size: 0.8em; }
+  .header h1 {
+    font-size: 1.1em;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .header .subtitle {
+    color: var(--text-tertiary);
+    font-size: 0.78em;
+    font-weight: 500;
+  }
   .header-actions { margin-left: auto; display: flex; gap: 8px; }
   .header-btn {
-    padding: 8px 16px;
-    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--surface);
     cursor: pointer;
-    font-size: 0.85em;
+    font-size: 0.84em;
     color: var(--text-secondary);
     transition: all var(--transition);
-    font-weight: 500;
+    font-weight: 600;
   }
-  .header-btn:hover { background: var(--surface-tertiary); border-color: var(--text-tertiary); }
+  .header-btn:hover {
+    background: var(--surface-tertiary);
+    border-color: var(--text-tertiary);
+    color: var(--text);
+  }
   .header-btn-primary {
     background: var(--primary);
     color: #fff;
     border-color: var(--primary);
   }
-  .header-btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+  .header-btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+  .header-home-link { color: inherit; text-decoration: none; }
+  .header-home-link:hover { color: var(--primary); }
 
-  /* Layout */
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
   .main { flex: 1; display: flex; overflow: hidden; }
 
-  /* Sidebar */
+  /* ============================================================
+     SIDEBAR  — fixed known issues: hierarchy, size, breathing room
+     ============================================================ */
   .sidebar {
-    width: 280px;
+    width: 300px;
     background: var(--surface);
     border-right: 1px solid var(--border);
     overflow-y: auto;
@@ -109,77 +156,122 @@
     flex-direction: column;
   }
   .sidebar-header {
-    padding: 20px 20px 12px;
-    font-size: 0.75em;
-    font-weight: 600;
+    padding: 20px 20px 10px;
+    font-size: 0.7em;
+    font-weight: 700;
     color: var(--text-tertiary);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
   }
   .sidebar-empty {
-    padding: 32px 20px;
+    padding: 40px 24px;
     text-align: center;
     color: var(--text-tertiary);
-    font-size: 0.85em;
+    font-size: 0.88em;
+    line-height: 1.7;
   }
-  .sidebar-empty-icon { font-size: 2em; margin-bottom: 8px; display: block; opacity: 0.5; }
+  .sidebar-empty-icon { font-size: 2.2em; margin-bottom: 10px; display: block; opacity: 0.45; }
+
+  /* Session item — FIXED: more padding, better hierarchy */
   .session-item {
-    padding: 12px 20px;
+    padding: 14px 20px 14px 17px;   /* more vertical breathing room */
     cursor: pointer;
     border-bottom: 1px solid var(--border-light);
-    transition: all var(--transition);
+    transition: background var(--transition), border-color var(--transition);
     border-left: 3px solid transparent;
+    position: relative;
   }
   .session-item:hover { background: var(--surface-tertiary); }
-  .session-item.active { background: var(--primary-light); border-left-color: var(--primary); }
-  .session-item .sid { font-family: 'SF Mono', 'Cascadia Code', monospace; font-size: 0.75em; color: var(--text-tertiary); }
-  .session-item .scat { font-weight: 600; font-size: 0.9em; color: var(--text); margin-bottom: 2px; }
-  .session-item .sdate { font-size: 0.75em; color: var(--text-tertiary); }
+  .session-item.active {
+    background: var(--primary-light);
+    border-left-color: var(--primary);
+  }
+
+  /* Category: PRIMARY label — bigger, bolder, warmer */
+  .session-item .scat {
+    font-weight: 700;
+    font-size: 0.97em;         /* was 0.9em */
+    color: var(--text);
+    margin-bottom: 5px;
+    text-transform: capitalize;
+    line-height: 1.3;
+  }
+
+  /* Date/time row: much more readable — FIXED */
+  .session-item .sdate-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .session-item .sdate {
+    font-size: 0.82em;          /* was buried inside .sid at 0.75em */
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* Session ID: de-emphasised — tiny, muted, not monospace noise */
+  .session-item .sid {
+    font-family: 'SF Mono', 'Cascadia Code', monospace;
+    font-size: 0.68em;
+    color: var(--text-tertiary);
+    opacity: 0.7;
+  }
+
   .session-item .sstage {
     display: inline-block;
-    padding: 2px 8px;
+    padding: 2px 9px;
     border-radius: 20px;
-    font-size: 0.7em;
-    font-weight: 600;
-    margin-top: 4px;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
-  .sstage-results, .sstage-done { background: var(--accent-light); color: var(--accent); }
-  .sstage-clarifying { background: #fffbeb; color: #d97706; }
+  .sstage-results, .sstage-done, .sstage-completed { background: var(--accent-light); color: var(--accent); }
+  .sstage-clarifying { background: #fef3c7; color: #92400e; }
   .sstage-error { background: #fef2f2; color: var(--danger); }
-  .sstage-analyzing, .sstage-searching { background: #eff6ff; color: #3b82f6; }
+  .sstage-analyzing, .sstage-searching, .sstage-active { background: #fef3c7; color: #92400e; }
+  .sstage-abandoned { background: var(--surface-tertiary); color: var(--text-tertiary); }
 
-  /* Chat Area */
+  /* ============================================================
+     CHAT AREA
+     ============================================================ */
   .chat-area { flex: 1; display: flex; flex-direction: column; background: var(--surface-secondary); }
 
   /* Messages */
   .messages {
     flex: 1;
     overflow-y: auto;
-    padding: 24px;
+    padding: 28px 28px 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: linear-gradient(180deg, var(--surface-secondary) 0%, #f0f0f8 100%);
+    /* Warm parchment gradient — not cool tech blue */
+    background: linear-gradient(180deg, #faf8f3 0%, #f5efe5 100%);
   }
   .msg {
-    max-width: 80%;
+    max-width: 78%;
     padding: 14px 18px;
     border-radius: var(--radius);
-    line-height: 1.6;
+    line-height: 1.65;
     font-size: 0.95em;
-    animation: msgFadeIn 300ms ease-out;
+    animation: msgFadeIn 280ms ease-out;
   }
   @keyframes msgFadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* User bubble: warm amber-brown */
   .msg-user {
     align-self: flex-end;
-    background: linear-gradient(135deg, var(--primary), #818cf8);
+    background: linear-gradient(135deg, #d97706, #c05621);
     color: #fff;
     border-bottom-right-radius: 4px;
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 10px rgba(180,83,9,0.28);
+    font-weight: 500;
   }
+
+  /* Assistant bubble: warm white card */
   .msg-assistant {
     align-self: flex-start;
     background: var(--surface);
@@ -187,6 +279,7 @@
     border-bottom-left-radius: 4px;
     box-shadow: var(--shadow-sm);
   }
+
   .msg-system {
     align-self: center;
     background: transparent;
@@ -197,66 +290,76 @@
   .msg-assistant strong { color: var(--text); }
   .msg p { margin: 4px 0; }
   .msg ul { margin: 6px 0 6px 18px; }
+
+  /* Photo bubble: amber frame */
   .msg-photo {
     align-self: flex-end;
     padding: 4px;
-    background: linear-gradient(135deg, var(--primary), #818cf8);
+    background: linear-gradient(135deg, #d97706, #c05621);
     border-radius: var(--radius);
     border-bottom-right-radius: 4px;
     box-shadow: var(--shadow-md);
   }
   .msg-photo img { max-width: 320px; max-height: 240px; border-radius: 10px; display: block; }
 
-  /* Welcome / Hero */
+  /* ============================================================
+     WELCOME / HERO  — warmer, more inviting
+     ============================================================ */
   .welcome {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 24px;
+    padding: 48px 28px;
     overflow-y: auto;
-    background: linear-gradient(180deg, #f8faff 0%, #f0f0f8 50%, var(--surface-secondary) 100%);
-    animation: welcomeFadeIn 600ms ease-out;
+    /* Warm parchment feel */
+    background: linear-gradient(160deg, #fffdf6 0%, #fdf5e4 45%, #f5ece0 100%);
+    animation: welcomeFadeIn 500ms ease-out;
   }
   @keyframes welcomeFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Hero icon: glowing amber house */
   .hero-icon {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg, var(--primary), #a855f7);
-    border-radius: 20px;
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 24px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 36px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(99,102,241,0.25);
-    animation: heroFloat 3s ease-in-out infinite;
+    font-size: 40px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(217,119,6,0.32), 0 2px 8px rgba(217,119,6,0.18);
+    animation: heroFloat 3.5s ease-in-out infinite;
   }
   @keyframes heroFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-7px) rotate(1deg); }
   }
+
   .welcome h2 {
     color: var(--text);
-    font-size: 1.8em;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 2em;
+    font-weight: 800;
+    margin-bottom: 10px;
     text-align: center;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
   }
   .welcome .hero-subtitle {
     color: var(--text-secondary);
-    max-width: 480px;
+    max-width: 460px;
     text-align: center;
-    line-height: 1.7;
-    margin-bottom: 32px;
+    line-height: 1.75;
+    margin-bottom: 36px;
     font-size: 1.05em;
   }
 
   /* How it works steps */
   .steps {
     display: flex;
-    gap: 32px;
+    gap: 28px;
     margin-bottom: 36px;
     flex-wrap: wrap;
     justify-content: center;
@@ -270,31 +373,38 @@
     text-align: center;
     animation: stepFadeIn 500ms ease-out backwards;
   }
-  .step:nth-child(1) { animation-delay: 100ms; }
-  .step:nth-child(2) { animation-delay: 250ms; }
-  .step:nth-child(3) { animation-delay: 400ms; }
+  .step:nth-child(1) { animation-delay: 120ms; }
+  .step:nth-child(2) { animation-delay: 280ms; }
+  .step:nth-child(3) { animation-delay: 440ms; }
   @keyframes stepFadeIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .step-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
+    width: 52px; height: 52px;
+    border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    font-size: 24px;
+    box-shadow: var(--shadow-sm);
   }
-  .step:nth-child(1) .step-icon { background: #eff6ff; color: #3b82f6; }
-  .step:nth-child(2) .step-icon { background: #f5f3ff; color: var(--primary); }
+  .step:nth-child(1) .step-icon { background: #fef3c7; color: #d97706; }
+  .step:nth-child(2) .step-icon { background: #fde8d0; color: #c05621; }
   .step:nth-child(3) .step-icon { background: var(--accent-light); color: var(--accent); }
-  .step-label { font-weight: 600; font-size: 0.85em; color: var(--text); }
-  .step-desc { font-size: 0.78em; color: var(--text-tertiary); line-height: 1.4; }
-  .step-arrow { color: var(--text-tertiary); font-size: 1.2em; align-self: center; margin-top: -16px; }
+  .step-label { font-weight: 700; font-size: 0.87em; color: var(--text); }
+  .step-desc { font-size: 0.78em; color: var(--text-tertiary); line-height: 1.45; }
+  .step-arrow {
+    color: var(--text-tertiary);
+    font-size: 1.3em;
+    align-self: center;
+    margin-top: -14px;
+    opacity: 0.5;
+  }
 
-  /* Upload zone */
+  /* Upload zone — warmer feel */
   .upload-zone {
     border: 2px dashed var(--border);
     border-radius: var(--radius-lg);
-    padding: 40px 32px;
+    padding: 44px 36px;
     text-align: center;
     cursor: pointer;
     transition: all var(--transition);
@@ -302,20 +412,26 @@
     width: 100%;
     background: var(--surface);
     position: relative;
+    box-shadow: var(--shadow-sm);
   }
   .upload-zone:hover, .upload-zone.dragover {
     border-color: var(--primary);
-    background: var(--primary-light);
-    box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+    background: var(--primary-surface);
+    box-shadow: 0 0 0 4px rgba(217,119,6,0.10);
   }
-  .upload-icon { font-size: 2.5em; margin-bottom: 8px; display: block; }
-  .upload-zone .upload-title { color: var(--text); font-weight: 600; font-size: 1em; margin: 4px 0; }
-  .upload-zone .upload-hint { color: var(--text-tertiary); font-size: 0.82em; }
+  .upload-icon { font-size: 2.8em; margin-bottom: 10px; display: block; }
+  .upload-zone .upload-title {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 1.02em;
+    margin: 4px 0;
+  }
+  .upload-zone .upload-hint { color: var(--text-tertiary); font-size: 0.82em; margin-top: 2px; }
   .upload-zone img {
     max-width: 320px;
     max-height: 220px;
     border-radius: var(--radius);
-    margin-top: 16px;
+    margin-top: 18px;
     box-shadow: var(--shadow-md);
     border: 3px solid var(--surface);
   }
@@ -331,16 +447,21 @@
   }
   .upload-actions input {
     flex: 1;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
+    padding: 13px 18px;
+    border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     font-size: 0.95em;
     font-family: inherit;
     background: var(--surface);
-    transition: border-color var(--transition);
+    transition: all var(--transition);
     color: var(--text);
+    box-shadow: var(--shadow-sm);
   }
-  .upload-actions input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .upload-actions input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.12);
+  }
   .upload-actions input::placeholder { color: var(--text-tertiary); }
 
   /* Trust badges */
@@ -361,66 +482,101 @@
   }
   .trust-badge-icon { font-size: 1.1em; }
 
-  /* Analyze button */
+  /* Analyze button — warm amber CTA */
   .analyze-btn {
-    padding: 12px 28px;
-    background: linear-gradient(135deg, var(--primary), #818cf8);
+    padding: 13px 30px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #fff;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.95em;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
     transition: all var(--transition);
-    box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+    box-shadow: 0 2px 10px rgba(217,119,6,0.35);
     font-family: inherit;
+    letter-spacing: 0.01em;
   }
-  .analyze-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(99,102,241,0.4); }
-  .analyze-btn:disabled { background: var(--border); cursor: not-allowed; box-shadow: none; transform: none; }
+  .analyze-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 18px rgba(217,119,6,0.45);
+    background: linear-gradient(135deg, #fbbf24, #b45309);
+  }
+  .analyze-btn:disabled {
+    background: var(--surface-tertiary);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
 
-  /* Input bar */
+  /* ============================================================
+     INPUT BAR — more premium feel
+     ============================================================ */
   .input-bar {
-    padding: 16px 24px;
+    padding: 16px 28px 20px;
     background: var(--surface);
     border-top: 1px solid var(--border);
     display: flex;
     gap: 10px;
     align-items: flex-end;
     flex-shrink: 0;
+    box-shadow: 0 -2px 12px rgba(120,80,20,0.06);
   }
   .input-bar textarea {
     flex: 1;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
+    padding: 12px 18px;
+    border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
     font-size: 0.95em;
     font-family: inherit;
     resize: none;
-    min-height: 44px;
+    min-height: 46px;
     max-height: 120px;
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--text);
-    transition: border-color var(--transition);
+    background: var(--surface-secondary);
+    transition: all var(--transition);
   }
-  .input-bar textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .input-bar textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.12);
+  }
+  .input-bar textarea::placeholder { color: var(--text-tertiary); }
+
   .send-btn {
-    padding: 12px 24px;
+    padding: 12px 26px;
     background: var(--primary);
     color: #fff;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.95em;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
     transition: all var(--transition);
     font-family: inherit;
+    box-shadow: 0 2px 8px rgba(180,83,9,0.25);
   }
-  .send-btn:hover { background: var(--primary-hover); }
-  .send-btn:disabled { background: var(--border); cursor: not-allowed; }
+  .send-btn:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 14px rgba(180,83,9,0.35);
+    transform: translateY(-1px);
+  }
+  .send-btn:disabled {
+    background: var(--surface-tertiary);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
 
-  /* Product cards */
+  /* ============================================================
+     PRODUCT CARDS
+     ============================================================ */
   .products-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
   .pcard {
     background: var(--surface);
@@ -430,7 +586,11 @@
     transition: all var(--transition);
     box-shadow: var(--shadow-sm);
   }
-  .pcard:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .pcard:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
   .pcard-header { padding: 0; display: flex; gap: 0; align-items: stretch; }
   .pcard-image {
     width: 120px;
@@ -483,6 +643,8 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .pcard-title a { color: inherit; text-decoration: none; }
+  .pcard-title a:hover { text-decoration: underline; color: var(--primary); }
   .pcard-stars { color: #f59e0b; font-size: 0.82em; margin-top: 2px; }
   .pcard-stars .star-count { color: var(--text-tertiary); margin-left: 4px; font-size: 0.9em; }
   .pcard-reason {
@@ -528,7 +690,11 @@
     transition: all var(--transition);
     font-family: inherit;
   }
-  .buy-btn:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(16,185,129,0.3); }
+  .buy-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(5,150,105,0.28);
+  }
   .pcard-details {
     display: none;
     padding: 12px 16px;
@@ -543,7 +709,7 @@
   .pcard-details-toggle {
     display: block;
     text-align: center;
-    padding: 6px;
+    padding: 7px;
     font-size: 0.75em;
     color: var(--text-tertiary);
     cursor: pointer;
@@ -552,7 +718,9 @@
   }
   .pcard-details-toggle:hover { background: var(--surface-tertiary); color: var(--text-secondary); }
 
-  /* Spec table */
+  /* ============================================================
+     SPEC TABLE
+     ============================================================ */
   .spec-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -561,22 +729,29 @@
     margin-top: 8px;
   }
   .spec-card-header {
-    padding: 14px 16px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border-light);
     display: flex;
     align-items: center;
     gap: 8px;
+    background: var(--surface-secondary);
   }
   .spec-card-header strong { font-size: 0.95em; }
   .spec-card-hint { font-size: 0.8em; color: var(--text-tertiary); margin-left: auto; }
   .spec-tbl { width: 100%; border-collapse: collapse; font-size: 0.88em; }
   .spec-tbl td { padding: 10px 16px; border-bottom: 1px solid var(--border-light); }
   .spec-tbl tr:last-child td { border-bottom: none; }
-  .spec-tbl td:first-child { font-weight: 600; color: var(--text-secondary); width: 30%; text-transform: capitalize; font-size: 0.9em; }
+  .spec-tbl td:first-child {
+    font-weight: 600;
+    color: var(--text-secondary);
+    width: 30%;
+    text-transform: capitalize;
+    font-size: 0.9em;
+  }
   .spec-tbl input {
     padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
     font-size: 0.95em;
     width: 100%;
     font-family: inherit;
@@ -584,7 +759,11 @@
     color: var(--text);
     background: var(--surface);
   }
-  .spec-tbl input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+  .spec-tbl input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.12);
+  }
   .spec-conf {
     display: flex;
     align-items: center;
@@ -605,20 +784,22 @@
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.85em;
-    font-weight: 600;
+    font-weight: 700;
     transition: all var(--transition);
     font-family: inherit;
   }
   .spec-apply-btn:hover { background: var(--primary-hover); }
 
-  /* Order confirmation */
+  /* ============================================================
+     ORDER CONFIRMATION
+     ============================================================ */
   .order-done {
     border-radius: var(--radius);
-    padding: 28px;
+    padding: 32px;
     text-align: center;
     margin-top: 8px;
-    background: linear-gradient(135deg, var(--accent-light), #d1fae5);
-    border: 1px solid #a7f3d0;
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1px solid #6ee7b7;
     position: relative;
     overflow: hidden;
   }
@@ -626,54 +807,97 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(16,185,129,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(99,102,241,0.08) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 50%, rgba(5,150,105,0.10) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(217,119,6,0.07) 0%, transparent 50%);
     pointer-events: none;
   }
   .order-checkmark {
-    width: 56px; height: 56px;
+    width: 58px; height: 58px;
     background: var(--accent);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 12px;
+    margin: 0 auto 14px;
     font-size: 28px;
     color: #fff;
-    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
+    box-shadow: 0 4px 20px rgba(5,150,105,0.32);
     animation: checkPop 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   @keyframes checkPop {
     0% { transform: scale(0); }
     100% { transform: scale(1); }
   }
-  .order-done h3 { color: #065f46; margin-bottom: 8px; font-size: 1.15em; position: relative; }
+  .order-done h3 { color: #065f46; margin-bottom: 8px; font-size: 1.18em; position: relative; font-weight: 800; }
   .order-done p { color: #047857; position: relative; font-size: 0.92em; }
 
-  /* Cost estimate card */
+  /* ============================================================
+     COST ESTIMATE
+     ============================================================ */
   .cost-card { margin-top: 8px; }
-  .cost-header { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; font-size: 0.95em; }
+  .cost-header { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; font-size: 0.98em; }
   .cost-icon { font-size: 1.2em; }
-  .cost-tbl { width: 100%; border-collapse: collapse; font-size: 0.88em; margin-bottom: 10px; }
-  .cost-tbl td { padding: 8px 10px; border-bottom: 1px solid var(--border-light); }
-  .cost-tbl td:first-child { color: var(--text-secondary); font-weight: 500; width: 45%; }
-  .cost-tbl td:last-child { font-weight: 600; text-align: right; }
-  .cost-total-row td { border-top: 2px solid var(--border); border-bottom: none; font-size: 1.05em; }
-  .cost-total-row td:last-child { color: var(--primary); font-weight: 700; font-size: 1.1em; }
-  .cost-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-  .cost-tool-tag { padding: 3px 10px; border-radius: 20px; font-size: 0.78em; font-weight: 500; background: #fef3c7; color: #92400e; }
-  .cost-tool-tag.owned { background: var(--accent-light); color: var(--accent); }
-  .cost-summary { font-size: 0.85em; color: var(--text-secondary); padding: 8px 10px; background: var(--surface-tertiary); border-radius: var(--radius-sm); line-height: 1.5; }
+  .cost-section { margin-bottom: 14px; }
+  .cost-section-title {
+    font-size: 0.68em;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+  }
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.86em;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-light);
+    gap: 12px;
+  }
+  .cost-row:last-child { border-bottom: none; }
+  .cost-row-name { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+  .cost-row-val { font-weight: 700; color: var(--text); flex-shrink: 0; }
+  .cost-row-owned { color: var(--text-tertiary); font-weight: 400; flex-shrink: 0; }
+  .cost-row-muted .cost-row-name { color: var(--text-tertiary); font-size: 0.88em; }
+  .cost-row-muted .cost-row-val { color: var(--text-tertiary); font-weight: 400; font-size: 0.88em; }
+  .cost-divider { border: none; border-top: 1.5px solid var(--border); margin: 12px 0 10px; }
+  .cost-total { display: flex; justify-content: space-between; align-items: center; }
+  .cost-total-label { font-weight: 700; font-size: 0.97em; }
+  .cost-total-val { font-weight: 800; font-size: 1.15em; color: var(--primary); }
 
-  /* Difficulty card */
+  /* ============================================================
+     ANALYSIS CARD
+     ============================================================ */
+  .analysis-card { padding: 4px 0; }
+  .analysis-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .analysis-header strong { font-size: 1.1em; color: var(--text); text-transform: capitalize; font-weight: 700; }
+  .analysis-problem { font-size: 0.85em; color: var(--text-tertiary); font-weight: 500; margin-bottom: 6px; }
+  .analysis-desc { font-size: 0.88em; color: var(--text-secondary); line-height: 1.55; }
+  .analysis-conf { margin-left: auto; font-size: 0.75em; font-weight: 700; color: var(--text-tertiary); flex-shrink: 0; }
+  .analysis-brand { padding: 2px 9px; background: var(--primary-light); color: var(--primary); border-radius: 20px; font-size: 0.75em; font-weight: 700; }
+  .analysis-texts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .analysis-text-tag {
+    padding: 2px 8px;
+    background: var(--surface-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-family: 'SF Mono', 'Cascadia Code', monospace;
+    color: var(--text-secondary);
+  }
+
+  /* ============================================================
+     DIFFICULTY CARD
+     ============================================================ */
   .diff-card {
     margin-top: 8px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 16px;
+    padding: 18px;
   }
   .diff-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
   .diff-badge {
-    padding: 4px 12px;
+    padding: 4px 13px;
     border-radius: 20px;
     font-size: 0.82em;
     font-weight: 700;
@@ -690,24 +914,26 @@
   .diff-pip.active-3 { background: var(--warning); }
   .diff-pip.active-4 { background: #f97316; }
   .diff-pip.active-5 { background: var(--danger); }
-  .diff-summary { font-size: 0.88em; color: var(--text-secondary); margin: 8px 0; line-height: 1.5; }
+  .diff-summary { font-size: 0.88em; color: var(--text-secondary); margin: 8px 0; line-height: 1.55; }
   .diff-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .diff-tool-tag {
-    padding: 4px 10px;
+    padding: 4px 11px;
     background: var(--primary-light);
-    color: var(--primary);
+    color: #92400e;
     border-radius: 20px;
     font-size: 0.78em;
-    font-weight: 500;
+    font-weight: 600;
   }
   .diff-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-light); }
   .diff-section strong { font-size: 0.88em; }
-  .diff-recommendation { margin-top: 8px; padding: 10px 12px; border-radius: var(--radius-sm); font-size: 0.88em; }
+  .diff-recommendation { margin-top: 8px; padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.88em; font-weight: 600; }
   .diff-rec-diy { background: #d1fae5; color: #065f46; }
   .diff-rec-either { background: #fef3c7; color: #92400e; }
   .diff-rec-hire { background: #fecaca; color: #991b1b; }
 
-  /* Typing indicator */
+  /* ============================================================
+     TYPING INDICATOR
+     ============================================================ */
   .typing {
     display: flex;
     gap: 5px;
@@ -733,16 +959,16 @@
     40% { transform: scale(1); opacity: 1; }
   }
 
-  /* System message new session button */
+  /* New session button */
   .new-session-btn {
-    padding: 10px 24px;
+    padding: 10px 26px;
     background: var(--surface);
     color: var(--primary);
     border: 2px solid var(--primary);
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 0.88em;
-    font-weight: 600;
+    font-weight: 700;
     transition: all var(--transition);
     font-family: inherit;
     margin-top: 8px;
@@ -754,12 +980,12 @@
   @media (max-width: 768px) {
     .sidebar { display: none; }
     .msg { max-width: 95%; }
-    .header { padding: 12px 16px; }
+    .header { padding: 12px 18px; }
     .messages { padding: 16px; }
     .input-bar { padding: 12px 16px; }
     .steps { gap: 16px; }
     .step-arrow { display: none; }
-    .upload-zone { padding: 24px 16px; }
+    .upload-zone { padding: 28px 18px; }
     .pcard-image { width: 80px; }
   }
 </style>
@@ -769,7 +995,7 @@
 <div class="header">
   <div class="header-logo">&#x1f527;</div>
   <div>
-    <h1>Home Fix Agent</h1>
+    <h1><a href="/" class="header-home-link" onclick="event.preventDefault();newSession()">Home Fix Agent</a></h1>
     <span class="subtitle">Photo &rarr; Product &rarr; Order</span>
   </div>
   <div class="header-actions">
@@ -845,6 +1071,7 @@
 let currentSession = null;
 let busy = false;
 let renderPass = 0;
+let previewUrl = null;
 
 const fileInput = document.getElementById('file-input');
 const uploadZone = document.getElementById('upload-zone');
@@ -857,7 +1084,9 @@ const chatInput = document.getElementById('chat-input');
 fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   if (!file) return;
-  preview.src = URL.createObjectURL(file);
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = URL.createObjectURL(file);
+  preview.src = previewUrl;
   preview.classList.remove('hidden');
   startBtn.disabled = false;
 });
@@ -880,7 +1109,7 @@ function handleKey(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
 
-// --- Start new analysis ---
+// --- Start new analysis (streaming) ---
 async function startAnalysis() {
   const file = fileInput.files[0];
   if (!file || busy) return;
@@ -890,10 +1119,11 @@ async function startAnalysis() {
   document.getElementById('welcome').classList.add('hidden');
   messagesEl.classList.remove('hidden');
   messagesEl.innerHTML = '';
+  renderedCount = 0;
 
   const desc = document.getElementById('description').value;
   if (desc) appendMsg('user', desc);
-  appendPhoto(URL.createObjectURL(file));
+  appendPhoto(previewUrl);
   showTyping();
 
   const form = new FormData();
@@ -901,23 +1131,97 @@ async function startAnalysis() {
   form.append('description', desc);
 
   try {
-    const resp = await fetch('/analyze', { method: 'POST', body: form });
-    const data = await resp.json();
-    if (data.error && !data.session) {
+    const resp = await fetch('/analyze-stream', { method: 'POST', body: form });
+    if (!resp.ok) {
       hideTyping();
-      appendMsg('assistant', '❌ ' + data.error);
+      const data = await resp.json().catch(() => ({}));
+      appendMsg('assistant', '❌ ' + (data.error || 'Request failed'));
       busy = false;
       return;
     }
-    currentSession = data;
-    renderSessionMessages(data);
-    updateInputBar(data);
-    loadHistory();
+    await readStream(resp.body);
   } catch (err) {
     hideTyping();
-    appendMsg('assistant', '❌ Request failed: ' + err.message);
+    appendMsg('assistant', '❌ ' + err.message);
   }
   busy = false;
+}
+
+async function readStream(body) {
+  const reader = body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    let nl;
+    while ((nl = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, nl).trim();
+      buffer = buffer.slice(nl + 1);
+      if (line.startsWith('data: ') && line.length > 6) {
+        try { handleStreamEvent(JSON.parse(line.slice(6))); } catch (_) {}
+      }
+    }
+  }
+}
+
+function handleStreamEvent(event) {
+  switch (event.type) {
+    case 'analysis':
+      hideTyping();
+      if (event.stage === 'error') {
+        appendMsg('assistant', '❌ ' + (event.error || 'Analysis failed'));
+        break;
+      }
+      if (!currentSession) currentSession = { session: { session_id: event.session_id } };
+      if (event.analysis && !document.getElementById('analysis-card')) {
+        messagesEl.insertAdjacentHTML('beforeend', buildAnalysisCard(event.analysis));
+      }
+      if (event.analysis && !document.getElementById('difficulty-card') &&
+          (event.analysis.difficulty_summary || (event.analysis.required_tools && event.analysis.required_tools.length))) {
+        messagesEl.insertAdjacentHTML('beforeend', buildDifficultyCard(event.analysis));
+      }
+      showTyping();
+      scrollBottom();
+      break;
+
+    case 'spec':
+      hideTyping();
+      if (event.spec) {
+        if (!currentSession) currentSession = {};
+        currentSession.spec = event.spec;
+        replaceOrAppend('spec-card', buildSpecCard(event.spec));
+      }
+      showTyping();
+      scrollBottom();
+      break;
+
+    case 'products':
+      hideTyping();
+      if (event.products && event.products.length) {
+        replaceOrAppend('products-card', buildProductCards(event.products, event.session_id));
+      }
+      showTyping();
+      scrollBottom();
+      break;
+
+    case 'done':
+      hideTyping();
+      currentSession = event.result;
+      if (event.result.cost_estimate) {
+        replaceOrAppend('cost-card', buildCostCard(event.result.cost_estimate, event.result.products));
+      }
+      updateInputBar(event.result);
+      loadHistory();
+      scrollBottom();
+      break;
+
+    case 'error':
+      hideTyping();
+      appendMsg('assistant', '❌ ' + (event.message || 'Something went wrong'));
+      break;
+  }
 }
 
 // --- Send chat message ---
@@ -989,23 +1293,60 @@ function appendServerMsg(m) {
   }
 }
 
+function buildAnalysisCard(analysis) {
+  const confPct = Math.round((analysis.confidence || 0) * 100);
+  const brand = analysis.visible_brand
+    ? `<span class="analysis-brand">${esc(analysis.visible_brand)}</span>` : '';
+  const texts = analysis.visible_text && analysis.visible_text.length
+    ? `<div class="analysis-texts">${analysis.visible_text.map(t => `<span class="analysis-text-tag">${esc(t)}</span>`).join('')}</div>` : '';
+  return `<div class="msg msg-assistant" id="analysis-card"><div class="analysis-card">
+    <div class="analysis-header">
+      <strong>${esc(analysis.problem_type)}</strong>
+      <span class="analysis-conf">${confPct}% confident</span>
+    </div>
+    <div class="analysis-problem">${esc(analysis.item_category)}${brand ? ' · ' + brand : ''}</div>
+    <div class="analysis-desc">${esc(analysis.description)}</div>
+    ${texts}
+  </div></div>`;
+}
+
 function renderRichContent(data) {
+  if (data.analysis && data.analysis.item_category) {
+    if (!document.getElementById('analysis-card')) {
+      messagesEl.insertAdjacentHTML('beforeend', buildAnalysisCard(data.analysis));
+    }
+  }
   if (data.analysis && (data.analysis.difficulty_summary || (data.analysis.required_tools && data.analysis.required_tools.length))) {
-    appendDifficultyCard(data.analysis);
+    if (!document.getElementById('difficulty-card')) {
+      messagesEl.insertAdjacentHTML('beforeend', buildDifficultyCard(data.analysis));
+    }
   }
   if (data.spec && data.spec.attributes && Object.keys(data.spec.attributes).length) {
-    appendSpecCard(data.spec);
+    replaceOrAppend('spec-card', buildSpecCard(data.spec));
   }
   if (data.products && data.products.length) {
-    appendProductCards(data.products, data.session.session_id);
+    replaceOrAppend('products-card', buildProductCards(data.products, data.session.session_id));
   }
   if (data.cost_estimate) {
-    appendCostCard(data.cost_estimate);
+    replaceOrAppend('cost-card', buildCostCard(data.cost_estimate, data.products));
   }
   if (data.order && data.order.status === 'placed') {
-    appendOrderCard(data.order);
+    if (!document.getElementById('order-card')) {
+      messagesEl.insertAdjacentHTML('beforeend', buildOrderCard(data.order));
+    }
   }
   scrollBottom();
+}
+
+function replaceOrAppend(id, html) {
+  const existing = document.getElementById(id);
+  if (existing) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    existing.replaceWith(tmp.firstElementChild);
+  } else {
+    messagesEl.insertAdjacentHTML('beforeend', html);
+  }
 }
 
 // --- Append message bubbles ---
@@ -1020,7 +1361,10 @@ function appendMsg(role, html) {
 function appendPhoto(src) {
   const div = document.createElement('div');
   div.className = 'msg-photo';
-  div.innerHTML = `<img src="${src}" alt="Uploaded photo">`;
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'Uploaded photo';
+  div.appendChild(img);
   messagesEl.appendChild(div);
   scrollBottom();
 }
@@ -1047,7 +1391,7 @@ function scrollBottom() {
 }
 
 // --- Rich content cards ---
-function appendDifficultyCard(analysis) {
+function buildDifficultyCard(analysis) {
   const score = analysis.difficulty_score || 1;
   const labels = ['', 'Trivial', 'Easy', 'Moderate', 'Hard', 'Professional'];
   const label = labels[score] || 'Unknown';
@@ -1072,14 +1416,9 @@ function appendDifficultyCard(analysis) {
     if (analysis.hire_reason) {
       hire += `<div class="diff-summary">${esc(analysis.hire_reason)}</div>`;
     }
-    if (rec !== 'diy' && analysis.hire_price_min_cents > 0) {
-      const lo = '$' + (analysis.hire_price_min_cents / 100).toFixed(0);
-      const hi = '$' + (analysis.hire_price_max_cents / 100).toFixed(0);
-      hire += `<div class="diff-summary" style="margin-top:4px"><strong>Estimated labor cost:</strong> ${lo} – ${hi} (not including parts)</div>`;
-    }
     hire += '</div>';
   }
-  const html = `<div class="msg msg-assistant"><div class="diff-card">
+  return `<div class="msg msg-assistant" id="difficulty-card"><div class="diff-card">
     <div class="diff-header">
       <strong>Difficulty</strong>
       <span class="diff-badge diff-badge-${score}">${label} (${score}/5)</span>
@@ -1088,10 +1427,9 @@ function appendDifficultyCard(analysis) {
     ${analysis.difficulty_summary ? `<div class="diff-summary">${esc(analysis.difficulty_summary)}</div>` : ''}
     ${tools}${fix}${hire}
   </div></div>`;
-  messagesEl.insertAdjacentHTML('beforeend', html);
 }
 
-function appendSpecCard(spec) {
+function buildSpecCard(spec) {
   let html = '<div class="msg msg-assistant" id="spec-card"><div class="spec-card">';
   html += '<div class="spec-card-header"><strong>Extracted Specs</strong><span class="spec-card-hint">Edit values to refine</span></div>';
   html += '<table class="spec-tbl">';
@@ -1105,7 +1443,7 @@ function appendSpecCard(spec) {
   html += '</table>';
   html += '<button class="spec-apply-btn" onclick="applySpecEdits()">Apply Changes</button>';
   html += '</div></div>';
-  messagesEl.insertAdjacentHTML('beforeend', html);
+  return html;
 }
 
 async function applySpecEdits() {
@@ -1119,7 +1457,10 @@ async function applySpecEdits() {
       edits.push(`${key.replace(/_/g, ' ')}: ${inp.value}`);
     }
   });
-  if (!edits.length) return;
+  if (!edits.length) {
+    appendMsg('system', 'No changes detected — edit a value above first.');
+    return;
+  }
   const msg = 'I want ' + edits.join(', ');
   busy = true;
   appendMsg('user', msg);
@@ -1140,15 +1481,16 @@ function renderStars(rating) {
   return stars;
 }
 
-function appendProductCards(products, sessionId) {
+function buildProductCards(products, sessionId) {
   renderPass++;
-  let html = '<div class="msg msg-assistant"><strong style="font-size:1.05em">Recommended Products</strong><div class="products-grid">';
+  let html = '<div class="msg msg-assistant" id="products-card"><strong style="font-size:1.05em">Recommended Products</strong><div class="products-grid">';
   products.forEach((p, i) => {
     const price = '$' + (p.price_cents / 100).toFixed(2);
     const stars = p.rating ? renderStars(p.rating) : '';
     const matchPct = Math.round((p.match_score || 0) * 100);
     const expandId = 'pexp-' + renderPass + '-' + i;
     const hasImage = p.image_url && !p.image_url.includes('example.com');
+    const realUrl = p.url && !p.url.includes('example.com') ? p.url : null;
     html += `<div class="pcard">
       <div class="pcard-header">
         <div class="pcard-image">
@@ -1158,7 +1500,7 @@ function appendProductCards(products, sessionId) {
           <div class="pcard-top-row">
             <div class="pcard-rank">${i + 1}</div>
             <div class="pcard-info">
-              <div class="pcard-title">${esc(p.title)}</div>
+              <div class="pcard-title">${realUrl ? `<a href="${esc(realUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.title)}</a>` : esc(p.title)}</div>
               ${stars ? `<div class="pcard-stars">${stars} <span class="star-count">${p.rating} (${p.review_count})</span></div>` : ''}
             </div>
           </div>
@@ -1171,20 +1513,20 @@ function appendProductCards(products, sessionId) {
       </div>
       <div class="pcard-footer">
         <div class="pcard-price">${price}</div>
-        <button class="buy-btn" onclick="event.stopPropagation();placeOrder('${sessionId}',${i})">Buy Now</button>
+        <button class="buy-btn" onclick="event.stopPropagation();placeOrder('${sessionId}',${i})">Order</button>
       </div>
       <div class="pcard-details" id="${expandId}">
         <div>
           ${p.asin_or_sku ? `<p><strong>SKU:</strong> ${esc(p.asin_or_sku)}</p>` : ''}
           <p><strong>Availability:</strong> ${esc(p.availability)}</p>
-          ${p.url ? `<p><a href="${esc(p.url)}" target="_blank">View on seller's site &rarr;</a></p>` : ''}
+          ${realUrl ? `<p><a href="${esc(realUrl)}" target="_blank">View on seller's site &rarr;</a></p>` : ''}
         </div>
       </div>
       <div class="pcard-details-toggle" onclick="toggleExpand('${expandId}')">Details &#x25BC;</div>
     </div>`;
   });
   html += '</div></div>';
-  messagesEl.insertAdjacentHTML('beforeend', html);
+  return html;
 }
 
 function toggleExpand(id) {
@@ -1194,52 +1536,64 @@ function toggleExpand(id) {
   if (toggle) toggle.innerHTML = isOpen ? 'Details &#x25B2;' : 'Details &#x25BC;';
 }
 
-function appendOrderCard(order) {
+function buildOrderCard(order) {
   const price = '$' + (order.total_price_cents / 100).toFixed(2);
-  const html = `<div class="msg msg-assistant"><div class="order-done">
+  return `<div class="msg msg-assistant" id="order-card"><div class="order-done">
     <div class="order-checkmark">&#x2713;</div>
     <h3>Order Placed!</h3>
     <p><strong>${esc(order.product_title)}</strong></p>
     <p>Total: ${price} &middot; ID: ${order.retailer_order_id}</p>
   </div></div>`;
-  messagesEl.insertAdjacentHTML('beforeend', html);
 }
 
-function appendCostCard(ce) {
+function buildCostCard(ce, products) {
   const fmt = (c) => c >= 100 ? '$' + (c / 100).toFixed(0) : '$' + (c / 100).toFixed(2);
-  const range = (lo, hi) => lo === hi ? fmt(lo) : fmt(lo) + ' - ' + fmt(hi);
+  const rng = (lo, hi) => lo === hi ? fmt(lo) : fmt(lo) + '–' + fmt(hi);
 
-  let rows = '';
-  rows += `<tr><td>Parts</td><td>${range(ce.parts_low_cents, ce.parts_high_cents)}</td></tr>`;
+  let sections = '';
 
-  if (ce.tools_high_cents > 0) {
-    rows += `<tr><td>Tools${ce.assumes_own_tools ? ' (likely owned)' : ''}</td><td>${range(ce.tools_low_cents, ce.tools_high_cents)}</td></tr>`;
+  // Parts section — list top product as the specific part, then show range if options vary
+  const topProduct = products && products.length ? products[0] : null;
+  sections += '<div class="cost-section"><div class="cost-section-title">Parts</div>';
+  if (topProduct) {
+    const partPrice = topProduct.price_cents ? fmt(topProduct.price_cents) : rng(ce.parts_low_cents, ce.parts_high_cents);
+    sections += `<div class="cost-row"><span class="cost-row-name">${esc(topProduct.title)}</span><span class="cost-row-val">${partPrice}</span></div>`;
+    if (products.length > 1 && ce.parts_high_cents > topProduct.price_cents) {
+      sections += `<div class="cost-row cost-row-muted"><span class="cost-row-name">Other options range</span><span class="cost-row-val">${rng(ce.parts_low_cents, ce.parts_high_cents)}</span></div>`;
+    }
   } else {
-    rows += `<tr><td>Tools</td><td>None needed / already owned</td></tr>`;
+    sections += `<div class="cost-row"><span class="cost-row-name">Replacement part</span><span class="cost-row-val">${rng(ce.parts_low_cents, ce.parts_high_cents)}</span></div>`;
   }
+  sections += '</div>';
 
-  if (ce.labor_high_cents > 0) {
-    rows += `<tr><td>Labor (optional)</td><td>${range(ce.labor_low_cents, ce.labor_high_cents)}</td></tr>`;
-  }
-
-  rows += `<tr class="cost-total-row"><td>Estimated Total</td><td>${range(ce.total_low_cents, ce.total_high_cents)}</td></tr>`;
-
-  let toolTags = '';
+  // Tools section — individual items if available, otherwise aggregate
   if (ce.tool_details && ce.tool_details.length) {
-    toolTags = '<div class="cost-tools">' + ce.tool_details.map(t => {
-      const owned = t.likely_owned ? ' (likely owned)' : '';
-      const price = t.price_low_cents ? ' ~' + fmt(t.price_low_cents) : '';
-      return `<span class="cost-tool-tag${t.likely_owned ? ' owned' : ''}">${esc(t.name)}${price}${owned}</span>`;
-    }).join('') + '</div>';
+    sections += '<div class="cost-section"><div class="cost-section-title">Tools</div>';
+    ce.tool_details.forEach(t => {
+      const val = t.likely_owned
+        ? `<span class="cost-row-owned">Already owned</span>`
+        : `<span class="cost-row-val">${t.price_low_cents ? rng(t.price_low_cents, t.price_high_cents || t.price_low_cents) : '—'}</span>`;
+      sections += `<div class="cost-row"><span class="cost-row-name">🔧 ${esc(t.name)}</span>${val}</div>`;
+    });
+    sections += '</div>';
+  } else if (ce.tools_high_cents > 0) {
+    sections += `<div class="cost-section"><div class="cost-section-title">Tools</div><div class="cost-row"><span class="cost-row-name">Required tools</span><span class="cost-row-val">${rng(ce.tools_low_cents, ce.tools_high_cents)}</span></div></div>`;
   }
 
-  const html = `<div class="msg msg-assistant"><div class="cost-card">
-    <div class="cost-header"><span class="cost-icon">&#x1f4b0;</span> <strong>Full Repair Cost Estimate</strong></div>
-    <table class="cost-tbl">${rows}</table>
-    ${toolTags}
-    ${ce.summary ? `<div class="cost-summary">${esc(ce.summary)}</div>` : ''}
+  // Labor section (optional)
+  if (ce.labor_high_cents > 0) {
+    sections += `<div class="cost-section"><div class="cost-section-title">Labor (if hiring)</div><div class="cost-row"><span class="cost-row-name">Handyman estimate</span><span class="cost-row-val">${rng(ce.labor_low_cents, ce.labor_high_cents)}</span></div></div>`;
+  }
+
+  return `<div class="msg msg-assistant" id="cost-card"><div class="cost-card">
+    <div class="cost-header"><span class="cost-icon">&#x1f4b0;</span> <strong>Full Repair Cost</strong></div>
+    ${sections}
+    <hr class="cost-divider">
+    <div class="cost-total">
+      <span class="cost-total-label">Estimated Total</span>
+      <span class="cost-total-val">${rng(ce.total_low_cents, ce.total_high_cents)}</span>
+    </div>
   </div></div>`;
-  messagesEl.insertAdjacentHTML('beforeend', html);
 }
 
 // --- Place order ---
@@ -1254,7 +1608,9 @@ async function placeOrder(sessionId, index) {
     currentSession = await resp.json();
     hideTyping();
     if (currentSession.error) { appendMsg('assistant', '❌ ' + currentSession.error); return; }
-    appendOrderCard(currentSession.order);
+    if (!document.getElementById('order-card')) {
+      messagesEl.insertAdjacentHTML('beforeend', buildOrderCard(currentSession.order));
+    }
     updateInputBar(currentSession);
     loadHistory();
     scrollBottom();
@@ -1269,18 +1625,25 @@ function updateInputBar(data) {
   const bar = document.getElementById('input-bar');
   const input = document.getElementById('chat-input');
 
-  if (data.stage === 'done' || data.stage === 'error') {
+  // Infer effective stage for sessions loaded from older JSON that lack a stage field
+  let stage = data.stage;
+  if (stage === 'upload' && data.products && data.products.length) stage = 'results';
+  if (data.order && (data.order.status === 'placed' || data.order.status === 'confirmed')) stage = 'done';
+
+  if (stage === 'done' || stage === 'error') {
     bar.classList.add('hidden');
-    appendMsg('system', '<button class="new-session-btn" onclick="newSession()">+ Start New Session</button>');
+    if (!document.querySelector('.new-session-btn')) {
+      appendMsg('system', '<button class="new-session-btn" onclick="newSession()">+ Start New Session</button>');
+    }
     return;
   }
 
   bar.classList.remove('hidden');
 
-  if (data.stage === 'clarifying') {
-    input.placeholder = 'Answer the questions above...';
-  } else if (data.stage === 'results') {
-    input.placeholder = 'Refine your search (e.g. "I need dimmable") or select a product above...';
+  if (stage === 'clarifying') {
+    input.placeholder = 'Answer the questions above, or skip to see results...';
+  } else if (stage === 'results' || stage === 'refining') {
+    input.placeholder = 'Chat with me to refine results and ask questions';
   } else {
     input.placeholder = 'Type a message...';
   }
@@ -1295,6 +1658,7 @@ function newSession() {
   messagesEl.classList.add('hidden');
   document.getElementById('input-bar').classList.add('hidden');
   messagesEl.innerHTML = '';
+  if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
   preview.classList.add('hidden');
   fileInput.value = '';
   document.getElementById('description').value = '';
@@ -1330,13 +1694,16 @@ async function loadHistory() {
       return;
     }
     list.innerHTML = sessions.map(s => {
-      const date = s.created_at ? new Date(s.created_at).toLocaleDateString() : '';
+      const date = s.created_at ? new Date(s.created_at).toLocaleString([], {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}) : '';
       const cat = s.category || 'unknown';
       const active = currentSession && currentSession.session.session_id === s.session_id ? ' active' : '';
       return `<div class="session-item${active}" data-sid="${s.session_id}" onclick="loadSession('${s.session_id}')">
         <div class="scat">${esc(cat)}</div>
-        <div class="sid">${s.session_id} &middot; <span class="sdate">${date}</span></div>
-        <span class="sstage sstage-${s.status}">${s.status}</span>
+        <div class="sdate-row">
+          ${date ? `<span class="sdate">${date}</span>` : ''}
+          <span class="sstage sstage-${s.status}">${s.status}</span>
+        </div>
+        <div class="sid">${s.session_id}</div>
       </div>`;
     }).join('');
   } catch (err) { /* ignore */ }
@@ -1346,11 +1713,16 @@ async function loadHistory() {
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 function formatMarkdown(text) {
-  return text
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
-    .replace(/\n/g, '<br>');
+  // Bold
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Convert runs of "- item" lines into <ul> blocks before newline substitution
+  text = text.replace(/((?:^- .+$\n?)+)/gm, (match) => {
+    const items = match.trim().split('\n').map(l => '<li>' + l.replace(/^- /, '') + '</li>').join('');
+    return '<ul>' + items + '</ul>';
+  });
+  // Remaining newlines to line breaks
+  text = text.replace(/\n/g, '<br>');
+  return text;
 }
 
 loadHistory();

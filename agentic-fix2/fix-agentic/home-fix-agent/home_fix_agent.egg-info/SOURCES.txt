@@ -10,6 +10,7 @@ src/main.py
 src/pipeline.py
 src/web.py
 src/agents/__init__.py
+src/agents/cost_estimator.py
 src/agents/order_manager.py
 src/agents/product_ranker.py
 src/agents/product_searcher.py

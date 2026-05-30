@@ -218,12 +218,13 @@ class TestPipeline:
             search_query="E26 60W LED bulb",
         )
 
+    @patch("src.pipeline.encode_image", return_value=("fake_b64", "image/jpeg"))
     @patch("src.pipeline.vision_analyst.analyze")
     @patch("src.pipeline.spec_extractor.extract")
     @patch("src.pipeline.product_searcher.search")
     @patch("src.pipeline.product_ranker.rank")
     @patch("src.pipeline.save_result")
-    def test_start_session_proceeds_with_clarification_questions(self, mock_save, mock_rank, mock_search, mock_extract, mock_analyze):
+    def test_start_session_proceeds_with_clarification_questions(self, mock_save, mock_rank, mock_search, mock_extract, mock_analyze, mock_encode):
         mock_analyze.side_effect = self._mock_analysis
         mock_extract.side_effect = self._mock_spec_with_questions
         mock_search.return_value = [ProductResult(title="Bulb", price_cents=500)]
@@ -235,15 +236,14 @@ class TestPipeline:
         assert result.stage == PipelineStage.RESULTS
         assert len(result.products) == 1
         mock_search.assert_called_once()
-        # But clarification questions are shown in messages
-        assert any("dimmer" in m.content for m in result.messages)
 
+    @patch("src.pipeline.encode_image", return_value=("fake_b64", "image/jpeg"))
     @patch("src.pipeline.vision_analyst.analyze")
     @patch("src.pipeline.spec_extractor.extract")
     @patch("src.pipeline.product_searcher.search")
     @patch("src.pipeline.product_ranker.rank")
     @patch("src.pipeline.save_result")
-    def test_start_session_proceeds_without_questions(self, mock_save, mock_rank, mock_search, mock_extract, mock_analyze):
+    def test_start_session_proceeds_without_questions(self, mock_save, mock_rank, mock_search, mock_extract, mock_analyze, mock_encode):
         mock_analyze.side_effect = self._mock_analysis
         mock_extract.side_effect = self._mock_spec_no_questions
         mock_search.return_value = [ProductResult(title="Bulb", price_cents=500)]

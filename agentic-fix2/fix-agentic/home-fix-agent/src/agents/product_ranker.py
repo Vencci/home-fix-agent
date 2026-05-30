@@ -3,6 +3,14 @@ from __future__ import annotations
 from src.models.schemas import ProductResult, ProductSpec
 from src.utils.config import load_ranking
 
+_ranking_cfg: dict | None = None
+
+def _get_ranking() -> dict:
+    global _ranking_cfg
+    if _ranking_cfg is None:
+        _ranking_cfg = load_ranking()
+    return _ranking_cfg
+
 _DEFAULT_WEIGHTS = {
     "spec_match": 0.40,
     "rating": 0.20,
@@ -28,7 +36,7 @@ def rank(products: list[ProductResult], spec: ProductSpec) -> list[ProductResult
     if not products:
         return []
 
-    cfg = load_ranking()
+    cfg = _get_ranking()
     w = cfg.get("weights", _DEFAULT_WEIGHTS)
 
     # Normalize price (lower = better) and rating/reviews (higher = better)

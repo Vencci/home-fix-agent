@@ -14,6 +14,9 @@ _DEFAULT_SYSTEM = """You are a home maintenance expert analyzing a photo. Descri
 4. Describe the physical characteristics: shape, color, size, material, base/connector type.
 5. How difficult is this repair? Rate 1-5: 1=trivial (swap a bulb), 2=easy (basic tools, 10-30 min), 3=moderate (DIY skill, 30-60 min), 4=hard (1-2 people, half day), 5=professional (hire a pro).
 6. What tools are needed? List specific tools.
+7. Write a brief step-by-step fix plan (fix_summary).
+8. Set diy_or_hire to "diy", "either", or "hire" based on whether a typical homeowner can handle this safely.
+9. If hiring is recommended, explain why (hire_reason) and estimate handyman labor cost as a range in cents (e.g. $80 = 8000).
 
 Rules:
 - Only report what is VISIBLE. Do not guess text you cannot read.
@@ -22,10 +25,11 @@ Rules:
 - item_category should be a short, specific description of the item, NOT "other".
 - problem_type should describe the actual problem, NOT "other".
 
-Return JSON: {"item_category": "string", "problem_type": "string", "visible_brand": "string or null", "visible_model": "string or null", "visible_text": ["string"], "description": "string", "confidence": 0.0, "difficulty_score": 1, "difficulty_summary": "string", "required_tools": ["string"]}"""
+Return JSON: {"item_category": "string", "problem_type": "string", "visible_brand": "string or null", "visible_model": "string or null", "visible_text": ["string"], "description": "string", "confidence": 0.0, "difficulty_score": 1, "difficulty_summary": "string", "required_tools": ["string"], "fix_summary": "string", "diy_or_hire": "diy|either|hire", "hire_reason": "string", "hire_price_min_cents": 0, "hire_price_max_cents": 0}"""
 
 
-def analyze(photo_path: str, session_id: str, user_description: str = "") -> IssueAnalysis:
+def analyze(photo_path: str, session_id: str, user_description: str = "",
+            encoded: tuple[str, str] | None = None) -> IssueAnalysis:
     """Analyze a photo and return an IssueAnalysis."""
     system = load_prompt("vision_analyst") or _DEFAULT_SYSTEM
     user_text = "Analyze this photo of a home maintenance issue."
@@ -33,7 +37,7 @@ def analyze(photo_path: str, session_id: str, user_description: str = "") -> Iss
         user_text += f"\n\nUser description: {user_description}"
 
     try:
-        result = llm_vision_json(system, user_text, photo_path)
+        result = llm_vision_json(system, user_text, photo_path, _encoded=encoded)
         return IssueAnalysis(
             session_id=session_id,
             item_category=result.get("item_category", "other"),
