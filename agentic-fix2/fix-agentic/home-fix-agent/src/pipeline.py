@@ -159,25 +159,32 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
 
     result = _run_part_searches(result)
 
-    # Always confirm the search ran
-    result.messages.append(_msg(
-        ChatRole.SYSTEM,
-        f"🔍 Searching: {result.spec.search_query if result.spec else '…'}",
-        "refining",
-    ))
+    # Build a single clear assistant response summarising what happened
+    search_query = result.spec.search_query if result.spec else "…"
+    n_products = len(result.products)
 
-    # Show spec changes if any
+    # Spec changes (optional detail)
+    spec_change_text = ""
     if result.spec and result.spec_history:
         prev = result.spec_history[-1]
         changes = _diff_specs(prev["attributes"], result.spec.attributes)
         if changes:
-            change_lines = "\n".join(f"- **{k}**: {old} → {new}" for k, old, new in changes)
-            result.messages.append(_msg(
-                ChatRole.ASSISTANT,
-                f"Updated specs:\n\n{change_lines}",
-                "refining",
-            ))
+            change_lines = ", ".join(f"**{k}** → {new}" for k, _, new in changes)
+            spec_change_text = f" Updated specs: {change_lines}."
 
+    if n_products:
+        reply = (
+            f"Found **{n_products} product{'s' if n_products != 1 else ''}** for "
+            f"*{search_query}*.{spec_change_text} "
+            f"The recommendations below have been updated."
+        )
+    else:
+        reply = (
+            f"Searched for *{search_query}* but found no matching products.{spec_change_text} "
+            f"Try rephrasing or broadening your request."
+        )
+
+    result.messages.append(_msg(ChatRole.ASSISTANT, reply, "refining"))
     return result
 
 
