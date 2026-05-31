@@ -30,7 +30,7 @@ def _clerk_jwks_url() -> str | None:
         b64 = pk.split("_", 2)[2].rstrip("$")
         # Standard base64 padding
         b64 += "=" * (4 - len(b64) % 4)
-        domain = base64.b64decode(b64).decode().strip().rstrip("/")
+        domain = base64.b64decode(b64).decode().strip().rstrip("/$")
         return f"https://{domain}/.well-known/jwks.json"
     except Exception as e:
         logger.warning("Cannot derive JWKS URL from publishable key: %s", e)

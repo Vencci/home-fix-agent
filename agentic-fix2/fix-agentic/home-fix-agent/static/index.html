@@ -958,28 +958,40 @@ async function initAuth() {
 
   if (!cfg.clerk_publishable_key) return;  // Clerk not configured — run without auth
 
-  const clerk = new window.Clerk(cfg.clerk_publishable_key);
-  await clerk.load();
-  clerkInstance = clerk;
-
   const overlay  = document.getElementById('auth-overlay');
   const userSlot = document.getElementById('clerk-user-btn');
 
-  function applyAuthState() {
-    if (clerk.user) {
-      overlay.style.display = 'none';
-      userSlot.innerHTML = '';
-      clerk.mountUserButton(userSlot);
-      loadHistory();
-    } else {
-      overlay.style.display = 'flex';
-      userSlot.innerHTML = '';
-      clerk.mountSignIn(document.getElementById('clerk-sign-in'));
-    }
-  }
+  // Show overlay immediately so user sees auth gate while Clerk loads
+  overlay.style.display = 'flex';
 
-  clerk.addListener(applyAuthState);
-  applyAuthState();
+  try {
+    if (!window.Clerk) throw new Error('Clerk JS not loaded');
+    const clerk = new window.Clerk(cfg.clerk_publishable_key);
+    await clerk.load();
+    clerkInstance = clerk;
+
+    function applyAuthState() {
+      if (clerk.user) {
+        overlay.style.display = 'none';
+        userSlot.innerHTML = '';
+        try { clerk.mountUserButton(userSlot); } catch (_) {}
+        loadHistory();
+      } else {
+        overlay.style.display = 'flex';
+        userSlot.innerHTML = '';
+        const signInEl = document.getElementById('clerk-sign-in');
+        if (signInEl && !signInEl.hasChildNodes()) {
+          try { clerk.mountSignIn(signInEl); } catch (_) {}
+        }
+      }
+    }
+
+    clerk.addListener(applyAuthState);
+    applyAuthState();
+  } catch (e) {
+    console.error('Clerk init failed:', e);
+    overlay.style.display = 'none';  // fall back to no-auth mode
+  }
 }
 
 async function authToken() {
