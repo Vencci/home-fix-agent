@@ -47,7 +47,7 @@ def advance(result: PipelineResult, user_message: str) -> PipelineResult:
     """Advance the pipeline based on current stage and user input."""
     result.messages.append(_msg(ChatRole.USER, user_message, result.stage.value))
 
-    if result.stage in (PipelineStage.RESULTS, PipelineStage.REFINING, PipelineStage.ERROR):
+    if result.stage in (PipelineStage.RESULTS, PipelineStage.REFINING, PipelineStage.ERROR, PipelineStage.DONE):
         if _is_question(result, user_message):
             answer = _answer_question(result, user_message)
             result.messages.append(_msg(ChatRole.ASSISTANT, answer, "answering"))

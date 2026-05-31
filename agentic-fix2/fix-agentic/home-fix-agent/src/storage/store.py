@@ -28,6 +28,16 @@ def load_result(session_id: str) -> PipelineResult | None:
     return PipelineResult.model_validate_json(path.read_text())
 
 
+def delete_session(session_id: str) -> bool:
+    """Delete a session directory. Returns True if deleted, False if not found."""
+    import shutil
+    d = sessions_dir() / session_id
+    if not d.exists():
+        return False
+    shutil.rmtree(d)
+    return True
+
+
 def list_sessions() -> list[dict]:
     """List all sessions with basic info, sorted newest first."""
     results = []
@@ -44,7 +54,7 @@ def list_sessions() -> list[dict]:
                     "session_id": session.get("session_id", d.name),
                     "created_at": session.get("created_at", ""),
                     "status": session.get("status", "unknown"),
-                    "category": analysis.get("item_category", ""),
+                    "category": session.get("display_name") or analysis.get("item_category", ""),
                 })
             except Exception:
                 results.append({"session_id": d.name, "status": "corrupt", "created_at": ""})

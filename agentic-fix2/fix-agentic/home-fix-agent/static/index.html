@@ -189,6 +189,47 @@
   .sstage-error { background: var(--red-l); color: var(--red); }
   .sstage-abandoned { background: var(--bg-3); color: var(--text-3); }
 
+  /* 3-dot session menu */
+  .session-menu-btn {
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 22px; border-radius: var(--r);
+    border: none; background: transparent; cursor: pointer;
+    color: var(--text-3); font-size: 14px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity var(--dur), background var(--dur);
+    flex-shrink: 0;
+  }
+  .session-item:hover .session-menu-btn { opacity: 1; }
+  .session-menu-btn:hover { background: var(--bg-4); color: var(--text); }
+
+  .session-dropdown {
+    position: fixed; z-index: 200;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+    min-width: 140px; overflow: hidden;
+  }
+  .session-dd-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 14px;
+    cursor: pointer; font-size: 13px; color: var(--text-2);
+    transition: background var(--dur);
+    user-select: none;
+  }
+  .session-dd-item:hover { background: var(--bg-3); color: var(--text); }
+  .session-dd-item.danger { color: var(--red); }
+  .session-dd-item.danger:hover { background: var(--red-l); }
+
+  .session-rename-wrap { padding: 4px 8px 8px; border-top: 1px solid var(--border); }
+  .session-rename-input {
+    width: 100%; padding: 5px 8px;
+    font-size: 12.5px; font-family: var(--font); font-weight: 600;
+    color: var(--text); background: var(--bg);
+    border: 1.5px solid var(--terra); border-radius: var(--r);
+    outline: none;
+  }
+
   /* ================================================================
      CHAT AREA
      ================================================================ */
@@ -1021,8 +1062,9 @@ async function sendChat(userMsg) {
     const data = await resp.json();
     hideTyping();
     if (data.error && !data.session) { appendMsg('assistant', '&#x274C; ' + data.error); return; }
+    const prevProducts = (currentSession && currentSession.products) || [];
     currentSession = data;
-    renderNewMessages(currentSession);
+    renderNewMessages(currentSession, productsChanged(prevProducts, data.products || []));
     updateInputBar(currentSession);
     loadHistory();
   } catch (err) {
@@ -1055,11 +1097,20 @@ function renderSessionMessages(data) {
   renderRichContent(data);
 }
 
-function renderNewMessages(data) {
+function productsChanged(prev, next) {
+  if (!prev || !next) return false;
+  if (prev.length !== next.length) return true;
+  if (prev.length === 0) return false;
+  return prev[0].result_id !== next[0].result_id;
+}
+
+function renderNewMessages(data, refined) {
   hideTyping();
   for (let i = renderedCount; i < data.messages.length; i++) appendServerMsg(data.messages[i]);
   renderedCount = data.messages.length;
-  renderRichContent(data, true);  // move updated cards to bottom so they appear after the chat exchange
+  // refined=true: products changed (refinement) → move cards below latest exchange
+  // refined=false: products same (question) → leave cards where they are
+  renderRichContent(data, refined);
 }
 
 function appendServerMsg(m) {
@@ -1444,16 +1495,21 @@ function updateInputBar(data) {
   const input = document.getElementById('chat-input');
   let stage = data.stage;
   if (stage === 'upload' && data.products && data.products.length) stage = 'results';
-  if (data.order && (data.order.status === 'placed' || data.order.status === 'confirmed')) stage = 'done';
-  if (stage === 'done' || stage === 'error') {
+
+  // Only close session on hard errors, not on order placed
+  if (stage === 'error') {
     bar.classList.add('hidden');
     if (!document.querySelector('.new-session-btn'))
       appendMsg('system', '<button class="new-session-btn" onclick="newSession()">+ Start New Session</button>');
     return;
   }
+
   bar.classList.remove('hidden');
-  if (stage === 'clarifying') input.placeholder = 'Answer the questions above, or skip to see results…';
-  else if (stage === 'results' || stage === 'refining') input.placeholder = 'Refine search, ask questions, or describe what you need…';
+  if (data.order && (data.order.status === 'placed' || data.order.status === 'confirmed'))
+    input.placeholder = 'Order placed! Ask about installation, warranty, or find more products…';
+  else if (stage === 'clarifying') input.placeholder = 'Answer the questions above, or skip to see results…';
+  else if (stage === 'results' || stage === 'refining' || stage === 'done')
+    input.placeholder = 'Refine search, ask questions, or describe what you need…';
   else input.placeholder = 'Type a message…';
   input.focus();
 }
@@ -1508,9 +1564,87 @@ async function loadHistory() {
           <span class="sstage sstage-${s.status}">${s.status}</span>
         </div>
         <div class="sid">${s.session_id}</div>
+        <button class="session-menu-btn" title="Options"
+          onclick="event.stopPropagation();showSessionMenu(event,'${s.session_id}','${esc(cat)}')">&#x22EF;</button>
       </div>`;
     }).join('');
   } catch (err) { /* ignore */ }
+}
+
+// ---- Session 3-dot menu ----
+let _activeDropdown = null;
+
+function showSessionMenu(event, sid, currentName) {
+  closeSessionMenu();
+  const btn = event.currentTarget;
+  const rect = btn.getBoundingClientRect();
+
+  const dd = document.createElement('div');
+  dd.className = 'session-dropdown';
+  dd.id = 'session-dd';
+  dd.innerHTML = `
+    <div class="session-dd-item" id="dd-rename">&#x270F;&#xFE0F; Rename</div>
+    <div class="session-dd-item danger" id="dd-delete">&#x1F5D1; Delete</div>
+    <div class="session-rename-wrap" id="dd-rename-form" style="display:none">
+      <input class="session-rename-input" id="dd-rename-input" type="text"
+        placeholder="New name…" value="${esc(currentName)}"
+        onclick="event.stopPropagation()"
+        onkeydown="handleRenameKey(event,'${sid}')">
+    </div>`;
+
+  document.body.appendChild(dd);
+  _activeDropdown = dd;
+
+  // Position below-right of button, flip if near edge
+  let top = rect.bottom + 4;
+  let left = rect.right - dd.offsetWidth;
+  if (left < 4) left = 4;
+  if (top + 120 > window.innerHeight) top = rect.top - 120;
+  dd.style.top = top + 'px';
+  dd.style.left = left + 'px';
+
+  dd.querySelector('#dd-rename').onclick = e => {
+    e.stopPropagation();
+    dd.querySelector('#dd-rename-form').style.display = 'block';
+    const inp = dd.querySelector('#dd-rename-input');
+    inp.focus(); inp.select();
+  };
+  dd.querySelector('#dd-delete').onclick = e => {
+    e.stopPropagation();
+    closeSessionMenu();
+    confirmDeleteSession(sid);
+  };
+
+  setTimeout(() => document.addEventListener('click', closeSessionMenu, { once: true }), 0);
+}
+
+function closeSessionMenu() {
+  if (_activeDropdown) { _activeDropdown.remove(); _activeDropdown = null; }
+}
+
+function handleRenameKey(e, sid) {
+  if (e.key === 'Enter') { e.preventDefault(); submitRename(sid, e.target.value); }
+  if (e.key === 'Escape') closeSessionMenu();
+}
+
+async function submitRename(sid, name) {
+  closeSessionMenu();
+  if (!name.trim()) return;
+  const form = new FormData();
+  form.append('name', name.trim());
+  try {
+    await fetch(`/session/${sid}/rename`, { method: 'POST', body: form });
+    loadHistory();
+  } catch (e) { /* ignore */ }
+}
+
+async function confirmDeleteSession(sid) {
+  if (!confirm('Delete this session? This cannot be undone.')) return;
+  try {
+    await fetch(`/session/${sid}`, { method: 'DELETE' });
+    if (currentSession && currentSession.session.session_id === sid) newSession();
+    loadHistory();
+  } catch (e) { /* ignore */ }
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }

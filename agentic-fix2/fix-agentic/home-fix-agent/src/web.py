@@ -17,7 +17,7 @@ from src.agents import order_manager
 from src.intake.photo import validate_and_store
 from src.models.schemas import PipelineResult, PipelineStage, Session
 from src.pipeline import advance, start_session, stream_session
-from src.storage.store import list_sessions, load_result, save_result
+from src.storage.store import delete_session, list_sessions, load_result, save_result
 from src.utils.config import STATIC_DIR
 
 # Sentinel used to detect generator exhaustion without raising StopIteration
@@ -180,9 +180,32 @@ async def place_order(request: Request, session_id: str = Form(...), product_ind
     order = order_manager.create_order(session_id, product)
     order = order_manager.confirm_order(order)
     r.order = order
-    r.stage = PipelineStage.DONE
+    r.stage = PipelineStage.RESULTS  # keep session open for further chat after ordering
     save_result(r)
     return JSONResponse(r.model_dump(mode="json"))
+
+
+@app.delete("/session/{session_id}")
+async def delete_session_endpoint(session_id: str):
+    """Delete a session and all its files."""
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
+    if delete_session(session_id):
+        return JSONResponse({"ok": True})
+    return JSONResponse({"error": "Not found"}, status_code=404)
+
+
+@app.post("/session/{session_id}/rename")
+async def rename_session(session_id: str, name: str = Form(...)):
+    """Set a custom display name for a session."""
+    if not _valid_session_id(session_id):
+        return JSONResponse({"error": "Invalid session ID"}, status_code=400)
+    r = load_result(session_id)
+    if not r:
+        return JSONResponse({"error": "Not found"}, status_code=404)
+    r.session.display_name = name.strip()[:80]
+    save_result(r)
+    return JSONResponse({"ok": True})
 
 
 @app.get("/history")

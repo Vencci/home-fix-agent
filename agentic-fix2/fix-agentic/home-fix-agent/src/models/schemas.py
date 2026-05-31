@@ -52,6 +52,7 @@ class Session(BaseModel):
     status: SessionStatus = SessionStatus.ACTIVE
     photo_path: str = ""
     description: str = ""
+    display_name: str = ""
 
 class IssueAnalysis(BaseModel):
     analysis_id: str = Field(default_factory=_uid)
