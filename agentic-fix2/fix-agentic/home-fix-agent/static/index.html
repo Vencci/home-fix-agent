@@ -1059,7 +1059,7 @@ function renderNewMessages(data) {
   hideTyping();
   for (let i = renderedCount; i < data.messages.length; i++) appendServerMsg(data.messages[i]);
   renderedCount = data.messages.length;
-  renderRichContent(data);
+  renderRichContent(data, true);  // move updated cards to bottom so they appear after the chat exchange
 }
 
 function appendServerMsg(m) {
@@ -1083,19 +1083,46 @@ function buildAnalysisCard(analysis) {
   </div></div>`;
 }
 
-function renderRichContent(data) {
+function renderRichContent(data, moveToBottom) {
   if (data.analysis && data.analysis.item_category && !document.getElementById('analysis-card'))
     messagesEl.insertAdjacentHTML('beforeend', buildAnalysisCard(data.analysis));
   if (data.analysis && (data.analysis.difficulty_summary || (data.analysis.required_tools && data.analysis.required_tools.length)) && !document.getElementById('difficulty-card'))
     messagesEl.insertAdjacentHTML('beforeend', buildDifficultyCard(data.analysis));
-  if (data.spec && data.spec.attributes && Object.keys(data.spec.attributes).length)
-    replaceOrAppend('spec-card', buildSpecCard(data.spec));
-  // Always update products card (even empty — so stale results don't silently persist)
-  // flash=true gives a brief amber outline so user sees the update happened
+
   const sid = data.session && data.session.session_id;
-  replaceOrAppend('products-card', buildAllProductCards(data.products || [], data.part_searches || [], sid), true);
-  if (data.cost_estimate)
-    replaceOrAppend('cost-card', buildCostCard(data.cost_estimate, data.products, data.part_searches));
+
+  if (moveToBottom) {
+    // After a chat refinement: remove cards from their old positions and re-append
+    // at the bottom so they appear after the latest chat exchange.
+    ['spec-card', 'products-card', 'cost-card'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.remove();
+    });
+    if (data.spec && data.spec.attributes && Object.keys(data.spec.attributes).length)
+      messagesEl.insertAdjacentHTML('beforeend', buildSpecCard(data.spec));
+    // Always append products (even if empty, shows "no results" message)
+    messagesEl.insertAdjacentHTML('beforeend', buildAllProductCards(data.products || [], data.part_searches || [], sid));
+    // Flash the new products card
+    const pc = document.getElementById('products-card');
+    if (pc) {
+      pc.style.transition = 'none';
+      pc.style.outline = '2px solid var(--terra)';
+      pc.style.outlineOffset = '2px';
+      requestAnimationFrame(() => {
+        pc.style.transition = 'outline 700ms ease, outline-offset 700ms ease';
+        pc.style.outline = '2px solid transparent';
+        pc.style.outlineOffset = '4px';
+      });
+    }
+    if (data.cost_estimate)
+      messagesEl.insertAdjacentHTML('beforeend', buildCostCard(data.cost_estimate, data.products, data.part_searches));
+  } else {
+    // Session load / streaming: replace in-place (cards stay where they were inserted)
+    if (data.spec && data.spec.attributes && Object.keys(data.spec.attributes).length)
+      replaceOrAppend('spec-card', buildSpecCard(data.spec));
+    replaceOrAppend('products-card', buildAllProductCards(data.products || [], data.part_searches || [], sid));
+    if (data.cost_estimate)
+      replaceOrAppend('cost-card', buildCostCard(data.cost_estimate, data.products, data.part_searches));
+  }
   if (data.order && data.order.status === 'placed' && !document.getElementById('order-card'))
     messagesEl.insertAdjacentHTML('beforeend', buildOrderCard(data.order));
   scrollBottom();

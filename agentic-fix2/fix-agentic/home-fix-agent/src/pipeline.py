@@ -8,7 +8,7 @@ from src.models.schemas import (
     ProductSpec, Session, SessionStatus,
 )
 from src.storage.store import save_result
-from src.utils.llm import encode_image
+from src.utils.llm import encode_image, llm_text
 
 logger = logging.getLogger(__name__)
 
@@ -48,11 +48,77 @@ def advance(result: PipelineResult, user_message: str) -> PipelineResult:
     result.messages.append(_msg(ChatRole.USER, user_message, result.stage.value))
 
     if result.stage in (PipelineStage.RESULTS, PipelineStage.REFINING, PipelineStage.ERROR):
-        # User is answering clarification or refining — re-search with their feedback
-        result = _run_refinement(result, user_message)
+        if _is_question(result, user_message):
+            answer = _answer_question(result, user_message)
+            result.messages.append(_msg(ChatRole.ASSISTANT, answer, "answering"))
+        else:
+            result = _run_refinement(result, user_message)
 
     save_result(result)
     return result
+
+
+_INTENT_SYSTEM = """You help classify user messages in a home repair product recommendation app.
+
+The user has already received product recommendations. Classify their message:
+
+- QUESTION: asking for information ABOUT the current products or repair
+  (e.g. "which has best reviews?", "what's the difference between #1 and #2?",
+   "how do I install this?", "is this compatible with my model?", "what warranty does it have?")
+
+- REFINE: asking for DIFFERENT or MODIFIED product recommendations
+  (e.g. "show me cheaper ones", "I need a dimmable version", "find something from Amazon",
+   "I want a black one", "show me options under $30", "find me brand X")
+
+Respond with ONLY the word QUESTION or REFINE."""
+
+
+def _is_question(result: PipelineResult, message: str) -> bool:
+    """Return True if the message is a question about current results, not a refinement request."""
+    if not result.products:
+        return False
+    products_preview = "; ".join(
+        f"{i+1}. {p.title} ${p.price_cents/100:.0f}"
+        for i, p in enumerate(result.products[:3])
+    )
+    context = (
+        f"Item being repaired: {result.analysis.item_category if result.analysis else 'unknown'}\n"
+        f"Current recommendations: {products_preview}\n"
+        f"User message: {message}"
+    )
+    try:
+        verdict = llm_text(_INTENT_SYSTEM, context, retries=0).strip().upper()
+        logger.info("Intent classification: %r → %s", message[:60], verdict)
+        return verdict == "QUESTION"
+    except Exception as e:
+        logger.warning("Intent classification failed: %s", e)
+        return False  # default to refinement
+
+
+_ANSWER_SYSTEM = """You are a helpful home repair assistant. The user has received product recommendations
+and is asking a question about them or about the repair. Answer concisely and helpfully in 1-3 sentences.
+Do not suggest doing another product search. Stick to answering what they asked."""
+
+
+def _answer_question(result: PipelineResult, question: str) -> str:
+    """Generate a conversational answer to a question about the current products/repair."""
+    products_detail = "\n".join(
+        f"{i+1}. {p.title} — ${p.price_cents/100:.2f}, {p.rating}★ ({p.review_count} reviews). {p.recommendation_reason}"
+        for i, p in enumerate(result.products[:5])
+    )
+    analysis_ctx = ""
+    if result.analysis:
+        analysis_ctx = (
+            f"Item: {result.analysis.item_category}\n"
+            f"Problem: {result.analysis.problem_type}\n"
+            f"Difficulty: {result.analysis.difficulty_summary}\n"
+        )
+    context = f"{analysis_ctx}\nCurrent product recommendations:\n{products_detail}\n\nUser question: {question}"
+    try:
+        return llm_text(_ANSWER_SYSTEM, context, retries=1)
+    except Exception as e:
+        logger.warning("Question answering failed: %s", e)
+        return "Sorry, I couldn't answer that right now. Try rephrasing your question."
 
 
 def _run_analysis(result: PipelineResult, encoded: tuple[str, str] | None = None) -> PipelineResult:

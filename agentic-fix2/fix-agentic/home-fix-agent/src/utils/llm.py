@@ -55,6 +55,27 @@ def llm_vision_json(system: str, user_text: str, image_path: str, retries: int =
                 raise
     return {}
 
+def llm_text(system: str, user_text: str, retries: int = 1) -> str:
+    """Call LLM expecting a plain text response."""
+    client, model = _client()
+    for attempt in range(retries + 1):
+        try:
+            resp = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user_text},
+                ],
+                temperature=0.4,
+                max_tokens=400,
+            )
+            return (resp.choices[0].message.content or "").strip()
+        except Exception as e:
+            logger.warning("LLM text attempt %d failed: %s", attempt + 1, e)
+            if attempt == retries:
+                raise
+    return ""
+
 def llm_json(system: str, user_text: str, retries: int = 2) -> dict:
     """Call LLM expecting JSON output (text only, no image)."""
     client, model = _client()
