@@ -124,13 +124,16 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
     # Accumulate feedback across rounds
     result.refinement_history.append(feedback)
 
-    # Build full context from all prior feedback + current spec
+    # Build directive context so the spec extractor always updates the search_query
     context_parts = []
     if result.spec:
         context_parts.append(f"Current specs: {result.spec.attributes}")
-        context_parts.append(f"Current search query: {result.spec.search_query}")
-    for i, fb in enumerate(result.refinement_history, 1):
-        context_parts.append(f"User feedback round {i}: {fb}")
+        context_parts.append(f"Current search query (must be updated to match the user's new request): {result.spec.search_query}")
+    if len(result.refinement_history) > 1:
+        for i, fb in enumerate(result.refinement_history[:-1], 1):
+            context_parts.append(f"Previous user request {i}: {fb}")
+    context_parts.append(f"NEW USER REQUEST (highest priority — update search_query to reflect this): {feedback}")
+    context_parts.append("IMPORTANT: You MUST produce a new search_query that incorporates the user's latest request. Do not return the same search_query as before.")
     extra_context = "\n".join(context_parts)
 
     # Re-encode the photo so spec extractor has full image context during refinement
@@ -141,10 +144,29 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
         except Exception as exc:
             logger.warning("Could not re-encode photo for refinement: %s", exc)
 
+    prev_query = result.spec.search_query if result.spec else ""
+
     result = _run_spec_extraction(result, extra_context=extra_context, encoded=encoded)
+
+    # If the LLM returned the same search_query, force-inject the user's key terms
+    if result.spec and result.spec.search_query == prev_query and feedback.strip():
+        stop_words = {'want', 'need', 'like', 'please', 'with', 'that', 'this', 'the', 'and',
+                      'or', 'a', 'an', 'to', 'for', 'my', 'me', 'can', 'you', 'have', 'i'}
+        key_terms = [w for w in feedback.lower().split() if len(w) >= 3 and w not in stop_words]
+        if key_terms:
+            result.spec.search_query = f"{prev_query} {' '.join(key_terms[:3])}".strip()
+            logger.info("search_query unchanged by LLM; appended feedback terms: %s", result.spec.search_query)
+
     result = _run_part_searches(result)
 
-    # Show what changed
+    # Always confirm the search ran
+    result.messages.append(_msg(
+        ChatRole.SYSTEM,
+        f"🔍 Searching: {result.spec.search_query if result.spec else '…'}",
+        "refining",
+    ))
+
+    # Show spec changes if any
     if result.spec and result.spec_history:
         prev = result.spec_history[-1]
         changes = _diff_specs(prev["attributes"], result.spec.attributes)
@@ -152,13 +174,7 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
             change_lines = "\n".join(f"- **{k}**: {old} → {new}" for k, old, new in changes)
             result.messages.append(_msg(
                 ChatRole.ASSISTANT,
-                f"Updated specs based on your feedback:\n\n{change_lines}",
-                "refining",
-            ))
-        if prev["search_query"] != result.spec.search_query:
-            result.messages.append(_msg(
-                ChatRole.SYSTEM,
-                f"Search updated: {result.spec.search_query}",
+                f"Updated specs:\n\n{change_lines}",
                 "refining",
             ))
 

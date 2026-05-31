@@ -306,84 +306,82 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .welcome-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    max-width: 1080px;
-    width: 100%;
-    align-items: start;
+  /* Single-column centered content */
+  .welcome-content {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 24px;
+    max-width: 660px; width: 100%;
+    text-align: center;
     position: relative; z-index: 1;
   }
 
-  /* Left col: hero + steps */
-  .welcome-left {
-    display: flex; flex-direction: column;
-    align-items: flex-start; gap: 24px;
-    padding-top: 8px;
-  }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 6px;
     background: var(--terra-l);
     border: 1px solid rgba(184,60,10,0.15);
     border-radius: 99px;
-    padding: 4px 12px;
+    padding: 4px 14px;
     font-size: 11px; font-weight: 700;
     color: var(--terra);
     letter-spacing: 0.04em; text-transform: uppercase;
   }
-  .welcome-left h2 {
+  .welcome-content h2 {
     font-family: var(--font-d);
-    font-size: clamp(28px, 3.5vw, 44px);
+    font-size: clamp(28px, 4vw, 46px);
     font-weight: 900;
     color: var(--text);
     letter-spacing: -0.025em;
     line-height: 1.08;
   }
-  .welcome-left h2 em { font-style: italic; color: var(--terra); }
-  .welcome-left .hero-subtitle {
+  .welcome-content h2 em { font-style: italic; color: var(--terra); }
+  .hero-subtitle {
     color: var(--text-2);
     line-height: 1.75; font-size: 15px;
-    max-width: 400px;
+    max-width: 520px;
   }
 
-  /* Steps */
+  /* Steps — horizontal 3 across */
   .steps {
-    display: flex; flex-direction: column;
-    gap: 0; width: 100%;
+    display: flex; gap: 0;
+    width: 100%; align-items: flex-start;
   }
   .step {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+    padding: 16px 10px;
+    text-align: center;
+    position: relative;
     animation: stepIn 450ms var(--ease-out) backwards;
   }
-  .step:last-child { border-bottom: none; }
+  .step:not(:last-child)::after {
+    content: '→';
+    position: absolute; right: -4px; top: 20px;
+    color: var(--text-4); font-size: 16px;
+  }
   .step:nth-child(1) { animation-delay: 80ms; }
-  .step:nth-child(2) { animation-delay: 180ms; }
-  .step:nth-child(3) { animation-delay: 280ms; }
+  .step:nth-child(2) { animation-delay: 200ms; }
+  .step:nth-child(3) { animation-delay: 320ms; }
   @keyframes stepIn {
-    from { opacity: 0; transform: translateX(-8px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .step-num {
-    width: 28px; height: 28px; flex-shrink: 0;
-    background: var(--bg-3);
-    border: 1.5px solid var(--border);
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--terra-l);
+    border: 1.5px solid rgba(184,60,10,0.20);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 800;
+    font-size: 13px; font-weight: 800;
     color: var(--terra);
-    margin-top: 2px;
   }
-  .step-text { flex: 1; }
-  .step-label { font-weight: 700; font-size: 13px; color: var(--text); margin-bottom: 1px; }
+  .step-label { font-weight: 700; font-size: 13px; color: var(--text); }
   .step-desc  { font-size: 12px; color: var(--text-3); line-height: 1.4; }
 
   /* Trust badges */
   .trust-badges {
-    display: flex; gap: 16px;
-    flex-wrap: wrap;
+    display: flex; gap: 20px;
+    flex-wrap: wrap; justify-content: center;
   }
   .trust-badge {
     display: flex; align-items: center; gap: 5px;
@@ -391,15 +389,10 @@
   }
   .trust-badge-icon { font-size: 13px; }
 
-  /* Right col: upload */
-  .welcome-right {
-    display: flex; flex-direction: column; gap: 10px;
-    position: sticky; top: 0;
-  }
   .upload-zone {
     border: 2px dashed var(--border);
     border-radius: var(--r-lg);
-    padding: 36px 28px;
+    padding: 36px 32px;
     text-align: center;
     cursor: pointer;
     transition: all var(--dur-md) var(--ease);
@@ -796,13 +789,10 @@
   /* ================================================================
      RESPONSIVE
      ================================================================ */
-  @media (max-width: 900px) {
-    .welcome-grid { grid-template-columns: 1fr; gap: 32px; }
-    .welcome-left { align-items: center; text-align: center; }
-    .welcome-left .hero-subtitle { max-width: 100%; }
-    .trust-badges { justify-content: center; }
-    .steps { max-width: 420px; width: 100%; }
-    .step { text-align: left; }
+  @media (max-width: 600px) {
+    .steps { flex-wrap: wrap; gap: 8px; }
+    .step { flex: 1 1 80px; }
+    .step:not(:last-child)::after { display: none; }
   }
   @media (max-width: 768px) {
     .sidebar { display: none; }
@@ -837,61 +827,47 @@
 
   <div class="chat-area">
     <div id="welcome" class="welcome">
-      <div class="welcome-grid">
+      <div class="welcome-content">
+        <div class="hero-eyebrow">&#x1f527; AI-Powered Home Repair</div>
+        <h2>What needs <em>fixing</em> today?</h2>
+        <p class="hero-subtitle">Snap a photo of any broken or missing part. Our AI identifies it, finds exact replacements, and helps you order — usually in under a minute.</p>
 
-        <!-- Left: hero + steps -->
-        <div class="welcome-left">
-          <div class="hero-eyebrow">&#x1f527; AI-Powered Home Repair</div>
-          <h2>What needs <em>fixing</em> today?</h2>
-          <p class="hero-subtitle">Snap a photo of any broken or missing part. Our AI identifies it, finds exact replacements, and helps you order — usually in under a minute.</p>
-
-          <div class="steps">
-            <div class="step">
-              <div class="step-num">1</div>
-              <div class="step-text">
-                <div class="step-label">Upload a photo</div>
-                <div class="step-desc">Any broken part, missing piece, or worn-out fixture</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">2</div>
-              <div class="step-text">
-                <div class="step-label">AI identifies &amp; searches</div>
-                <div class="step-desc">Specs extracted, exact replacements found with pricing</div>
-              </div>
-            </div>
-            <div class="step">
-              <div class="step-num">3</div>
-              <div class="step-text">
-                <div class="step-label">Compare &amp; order</div>
-                <div class="step-desc">Pick the best match, refine with chat, place your order</div>
-              </div>
-            </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-label">Upload a photo</div>
+            <div class="step-desc">Any broken part, missing piece, or worn-out fixture</div>
           </div>
-
-          <div class="trust-badges">
-            <div class="trust-badge"><span class="trust-badge-icon">&#x1f9e0;</span> Vision AI analysis</div>
-            <div class="trust-badge"><span class="trust-badge-icon">&#x1f50d;</span> Live product search</div>
-            <div class="trust-badge"><span class="trust-badge-icon">&#x1f6e0;&#xfe0f;</span> DIY difficulty guide</div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-label">AI identifies</div>
+            <div class="step-desc">Specs extracted, replacements found with pricing</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-label">Compare &amp; order</div>
+            <div class="step-desc">Pick the best match, refine with chat, place your order</div>
           </div>
         </div>
 
-        <!-- Right: upload zone -->
-        <div class="welcome-right">
-          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
-            <span class="upload-icon">&#x1f4f7;</span>
-            <p class="upload-title">Click to upload or drag &amp; drop</p>
-            <p class="upload-hint">JPG &middot; PNG &middot; HEIC &middot; up to 20 MB</p>
-            <img id="preview" class="hidden" alt="Preview">
-            <input type="file" id="file-input" accept="image/jpeg,image/png,image/heic">
-          </div>
-
-          <div class="upload-actions">
-            <input id="description" type="text" placeholder="Describe the issue (optional)&hellip;">
-            <button class="analyze-btn" id="start-btn" disabled onclick="startAnalysis()">Analyze</button>
-          </div>
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+          <span class="upload-icon">&#x1f4f7;</span>
+          <p class="upload-title">Click to upload or drag &amp; drop</p>
+          <p class="upload-hint">JPG &middot; PNG &middot; HEIC &middot; up to 20 MB</p>
+          <img id="preview" class="hidden" alt="Preview">
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/heic">
         </div>
 
+        <div class="upload-actions">
+          <input id="description" type="text" placeholder="Describe the issue (optional)&hellip;">
+          <button class="analyze-btn" id="start-btn" disabled onclick="startAnalysis()">Analyze</button>
+        </div>
+
+        <div class="trust-badges">
+          <div class="trust-badge"><span class="trust-badge-icon">&#x1f9e0;</span> Vision AI analysis</div>
+          <div class="trust-badge"><span class="trust-badge-icon">&#x1f50d;</span> Live product search</div>
+          <div class="trust-badge"><span class="trust-badge-icon">&#x1f6e0;&#xfe0f;</span> DIY difficulty guide</div>
+        </div>
       </div>
     </div>
 
@@ -1115,8 +1091,9 @@ function renderRichContent(data) {
   if (data.spec && data.spec.attributes && Object.keys(data.spec.attributes).length)
     replaceOrAppend('spec-card', buildSpecCard(data.spec));
   // Always update products card (even empty — so stale results don't silently persist)
+  // flash=true gives a brief amber outline so user sees the update happened
   const sid = data.session && data.session.session_id;
-  replaceOrAppend('products-card', buildAllProductCards(data.products || [], data.part_searches || [], sid));
+  replaceOrAppend('products-card', buildAllProductCards(data.products || [], data.part_searches || [], sid), true);
   if (data.cost_estimate)
     replaceOrAppend('cost-card', buildCostCard(data.cost_estimate, data.products, data.part_searches));
   if (data.order && data.order.status === 'placed' && !document.getElementById('order-card'))
@@ -1124,12 +1101,23 @@ function renderRichContent(data) {
   scrollBottom();
 }
 
-function replaceOrAppend(id, html) {
+function replaceOrAppend(id, html, flash) {
   const existing = document.getElementById(id);
   if (existing) {
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
-    existing.replaceWith(tmp.firstElementChild);
+    const next = tmp.firstElementChild;
+    existing.replaceWith(next);
+    if (flash && next) {
+      next.style.transition = 'none';
+      next.style.outline = '2px solid var(--terra)';
+      next.style.outlineOffset = '2px';
+      requestAnimationFrame(() => {
+        next.style.transition = 'outline 600ms ease, outline-offset 600ms ease';
+        next.style.outline = '2px solid transparent';
+        next.style.outlineOffset = '4px';
+      });
+    }
   } else {
     messagesEl.insertAdjacentHTML('beforeend', html);
   }
