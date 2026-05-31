@@ -8,6 +8,10 @@ primary_region = 'sjc'
 
 [build]
 
+[[mounts]]
+  source      = "home_fix_data"
+  destination = "/app/data"
+
 [http_service]
   internal_port = 8000
   force_https = true

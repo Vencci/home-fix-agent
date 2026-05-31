@@ -53,6 +53,7 @@ class Session(BaseModel):
     photo_path: str = ""
     description: str = ""
     display_name: str = ""
+    user_id: str = ""
 
 class IssueAnalysis(BaseModel):
     analysis_id: str = Field(default_factory=_uid)

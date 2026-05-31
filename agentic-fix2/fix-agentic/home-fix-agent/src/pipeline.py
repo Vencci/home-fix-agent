@@ -17,9 +17,10 @@ def _msg(role: ChatRole, content: str, stage: str | None = None) -> ChatMessage:
     return ChatMessage(role=role, content=content, stage=stage)
 
 
-def start_session(photo_path: str, description: str = "", session_id: str | None = None) -> PipelineResult:
+def start_session(photo_path: str, description: str = "", session_id: str | None = None,
+                  user_id: str = "") -> PipelineResult:
     """Create session and run through analysis + spec extraction, blocking if clarification needed."""
-    session = Session(description=description)
+    session = Session(description=description, user_id=user_id)
     if session_id:
         session.session_id = session_id
     result = PipelineResult(session=session, stage=PipelineStage.UPLOAD)
@@ -254,12 +255,13 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
     return result
 
 
-def stream_session(photo_path: str, description: str = "", session_id: str | None = None):
+def stream_session(photo_path: str, description: str = "", session_id: str | None = None,
+                   user_id: str = ""):
     """Generator that yields (event_type, PipelineResult) as each stage completes.
 
     Yields: "analysis", "spec", "products", "done", or "error".
     """
-    session = Session(description=description)
+    session = Session(description=description, user_id=user_id)
     if session_id:
         session.session_id = session_id
     result = PipelineResult(session=session, stage=PipelineStage.UPLOAD)
