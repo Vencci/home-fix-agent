@@ -28,7 +28,7 @@ def _next_stream_event(gen):
     except StopIteration:
         return _STREAM_DONE
 
-app = FastAPI(title="Home Fix Agent")
+app = FastAPI(title="Reparo")
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 _SESSION_ID_RE = re.compile(r"^[a-f0-9]{12}$")
