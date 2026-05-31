@@ -102,12 +102,13 @@
     font-size: 15px; flex-shrink: 0;
     box-shadow: 0 2px 8px rgba(184,60,10,0.30);
   }
-  .header-brand {
+  .header-center {
     position: absolute; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center;
-    line-height: 1.2; pointer-events: none;
+    display: flex; align-items: center; gap: 12px;
+    pointer-events: none;
   }
-  .header-brand a, .header-brand h1 { pointer-events: auto; }
+  .header-center > * { pointer-events: auto; }
+  .header-brand { display: flex; flex-direction: column; line-height: 1.2; }
   .header h1 {
     font-family: var(--font-d);
     font-size: 22px; font-weight: 800;
@@ -857,10 +858,12 @@
 <body>
 
 <div class="header">
-  <div class="header-logo">&#x1f527;</div>
-  <div class="header-brand">
-    <h1><a href="/" class="header-home-link" onclick="event.preventDefault();newSession()">Reparo</a></h1>
-    <span class="subtitle">Snap a photo &middot; Find the part &middot; Fix it fast</span>
+  <div class="header-center">
+    <div class="header-logo">&#x1f527;</div>
+    <div class="header-brand">
+      <h1><a href="/" class="header-home-link" onclick="event.preventDefault();newSession()">Reparo</a></h1>
+      <span class="subtitle">Snap a photo &middot; Find the part &middot; Fix it fast</span>
+    </div>
   </div>
   <div class="header-actions">
     <button class="header-btn header-btn-primary" onclick="newSession()">+ New Session</button>
