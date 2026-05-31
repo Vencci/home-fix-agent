@@ -103,7 +103,8 @@
     box-shadow: 0 2px 8px rgba(184,60,10,0.30);
   }
   .header-center {
-    position: absolute; left: 50%; transform: translateX(-50%);
+    /* Center within the chat area (full width minus 240px sidebar) */
+    position: absolute; left: calc(50% + 120px); transform: translateX(-50%);
     display: flex; align-items: center; gap: 12px;
     pointer-events: none;
   }
@@ -845,6 +846,7 @@
   }
   @media (max-width: 768px) {
     .sidebar { display: none; }
+    .header-center { left: 50%; }  /* no sidebar offset on mobile */
     .msg { max-width: 93%; }
     .header { padding: 0 16px; }
     .messages { padding: 16px; }
