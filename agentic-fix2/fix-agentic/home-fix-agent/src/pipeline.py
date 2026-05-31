@@ -4,7 +4,8 @@ import logging
 
 from src.agents import cost_estimator, product_ranker, product_searcher, spec_extractor, vision_analyst
 from src.models.schemas import (
-    ChatMessage, ChatRole, PipelineResult, PipelineStage, Session, SessionStatus,
+    ChatMessage, ChatRole, PartSearchResult, PipelineResult, PipelineStage,
+    ProductSpec, Session, SessionStatus,
 )
 from src.storage.store import save_result
 from src.utils.llm import encode_image
@@ -37,6 +38,7 @@ def start_session(photo_path: str, description: str = "", session_id: str | None
 
     # Run spec extraction + search (clarification questions shown alongside results)
     result = _run_spec_extraction(result, encoded=encoded)
+    result = _run_part_searches(result)
     save_result(result)
     return result
 
@@ -85,6 +87,7 @@ def _run_spec_extraction(result: PipelineResult, extra_context: str = "",
 def _run_search(result: PipelineResult) -> PipelineResult:
     """Search for products and rank them."""
     result.stage = PipelineStage.SEARCHING
+    result.products = []  # clear before searching so stale results never silently persist
 
     products = product_searcher.search(result.spec)
     if not products:
@@ -99,7 +102,10 @@ def _run_search(result: PipelineResult) -> PipelineResult:
 
     # Estimate full repair cost
     if result.analysis:
-        result.cost_estimate = cost_estimator.estimate(result.analysis, result.products)
+        result.cost_estimate = cost_estimator.estimate(
+            result.analysis, result.products,
+            part_searches=result.part_searches or None,
+        )
 
     return result
 
@@ -127,7 +133,16 @@ def _run_refinement(result: PipelineResult, feedback: str) -> PipelineResult:
         context_parts.append(f"User feedback round {i}: {fb}")
     extra_context = "\n".join(context_parts)
 
-    result = _run_spec_extraction(result, extra_context=extra_context)
+    # Re-encode the photo so spec extractor has full image context during refinement
+    encoded = None
+    if result.session.photo_path:
+        try:
+            encoded = encode_image(result.session.photo_path)
+        except Exception as exc:
+            logger.warning("Could not re-encode photo for refinement: %s", exc)
+
+    result = _run_spec_extraction(result, extra_context=extra_context, encoded=encoded)
+    result = _run_part_searches(result)
 
     # Show what changed
     if result.spec and result.spec_history:
@@ -184,13 +199,57 @@ def stream_session(photo_path: str, description: str = "", session_id: str | Non
         yield "error", result
         return
 
+    result = _run_part_searches(result)
     yield "products", result
 
     if result.analysis:
-        result.cost_estimate = cost_estimator.estimate(result.analysis, result.products)
+        all_products = (
+            [p for ps in result.part_searches for p in ps.products]
+            if result.part_searches else result.products
+        )
+        result.cost_estimate = cost_estimator.estimate(result.analysis, result.products,
+                                                       part_searches=result.part_searches or None)
 
     save_result(result)
     yield "done", result
+
+
+def _run_part_searches(result: PipelineResult) -> PipelineResult:
+    """If the analysis identified multiple purchasable parts, search for each one."""
+    parts = (result.analysis.parts_to_purchase or []) if result.analysis else []
+    if len(parts) <= 1:
+        return result  # single-part: main _run_search already handled it
+
+    result.part_searches = []
+    for part in parts:
+        if not isinstance(part, dict):
+            continue
+        name = part.get("name", "").strip()
+        desc = part.get("description", "").strip()
+        sq = part.get("search_query", "").strip() or f"{name} {desc}".strip()
+        if not name:
+            continue
+
+        part_spec = ProductSpec(
+            session_id=result.session.session_id,
+            item_category=name,
+            search_query=sq,
+            attributes={"name": name, "description": desc},
+        )
+        try:
+            products = product_searcher.search(part_spec)
+            ranked = product_ranker.rank(products, part_spec)[:3] if products else []
+        except Exception as exc:
+            logger.warning("Part search failed for '%s': %s", name, exc)
+            ranked = []
+        result.part_searches.append(PartSearchResult(
+            part_name=name,
+            part_description=desc,
+            search_query=sq,
+            products=ranked,
+        ))
+
+    return result
 
 
 def _diff_specs(old: dict, new: dict) -> list[tuple[str, str, str]]:

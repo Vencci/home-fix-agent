@@ -17,6 +17,7 @@ _DEFAULT_SYSTEM = """You are a home maintenance expert analyzing a photo. Descri
 7. Write a brief step-by-step fix plan (fix_summary).
 8. Set diy_or_hire to "diy", "either", or "hire" based on whether a typical homeowner can handle this safely.
 9. If hiring is recommended, explain why (hire_reason) and estimate handyman labor cost as a range in cents (e.g. $80 = 8000).
+10. List every purchasable part/item the user needs to BUY (not tools). Include ALL parts required — e.g., for a faucet replacement include the faucet AND supply lines AND plumber's tape if needed. For each part provide: name (specific product type), description (key specs/dimensions for searching), search_query (effective search string to find it online).
 
 Rules:
 - Only report what is VISIBLE. Do not guess text you cannot read.
@@ -24,8 +25,9 @@ Rules:
 - Do not recommend products. Only describe what you see.
 - item_category should be a short, specific description of the item, NOT "other".
 - problem_type should describe the actual problem, NOT "other".
+- parts_to_purchase must always have at least one entry (the primary item to replace/buy).
 
-Return JSON: {"item_category": "string", "problem_type": "string", "visible_brand": "string or null", "visible_model": "string or null", "visible_text": ["string"], "description": "string", "confidence": 0.0, "difficulty_score": 1, "difficulty_summary": "string", "required_tools": ["string"], "fix_summary": "string", "diy_or_hire": "diy|either|hire", "hire_reason": "string", "hire_price_min_cents": 0, "hire_price_max_cents": 0}"""
+Return JSON: {"item_category": "string", "problem_type": "string", "visible_brand": "string or null", "visible_model": "string or null", "visible_text": ["string"], "description": "string", "confidence": 0.0, "difficulty_score": 1, "difficulty_summary": "string", "required_tools": ["string"], "fix_summary": "string", "diy_or_hire": "diy|either|hire", "hire_reason": "string", "hire_price_min_cents": 0, "hire_price_max_cents": 0, "parts_to_purchase": [{"name": "string", "description": "string", "search_query": "string"}]}"""
 
 
 def analyze(photo_path: str, session_id: str, user_description: str = "",
@@ -55,6 +57,7 @@ def analyze(photo_path: str, session_id: str, user_description: str = "",
             hire_reason=result.get("hire_reason", ""),
             hire_price_min_cents=int(result.get("hire_price_min_cents", 0)),
             hire_price_max_cents=int(result.get("hire_price_max_cents", 0)),
+            parts_to_purchase=result.get("parts_to_purchase", []),
         )
     except Exception as e:
         logger.error("Vision analysis failed: %s", e)

@@ -1,7 +1,7 @@
 """Cost Estimator agent: estimate total repair cost (parts + tools + labor)."""
 from __future__ import annotations
 import logging
-from src.models.schemas import CostEstimate, IssueAnalysis, ProductResult
+from src.models.schemas import CostEstimate, IssueAnalysis, PartSearchResult, ProductResult
 from src.utils.llm import llm_json
 
 logger = logging.getLogger(__name__)
@@ -23,13 +23,23 @@ Rules:
 - Be realistic with tool prices based on typical hardware store prices."""
 
 
-def estimate(analysis: IssueAnalysis, products: list[ProductResult]) -> CostEstimate:
-    """Estimate full repair cost from analysis and top product results."""
-    if not products:
-        return CostEstimate(summary="No products found to estimate cost.")
+def estimate(analysis: IssueAnalysis, products: list[ProductResult],
+             part_searches: list[PartSearchResult] | None = None) -> CostEstimate:
+    """Estimate full repair cost from analysis and top product results.
 
-    parts_low = min(p.price_cents for p in products)
-    parts_high = max(p.price_cents for p in products)
+    When part_searches is provided (multi-part repair), costs are summed across all parts.
+    """
+    if part_searches and len(part_searches) > 1:
+        # Multi-part: sum cheapest and most-expensive option across all parts
+        parts_low = sum(min(p.price_cents for p in ps.products) for ps in part_searches if ps.products)
+        parts_high = sum(max(p.price_cents for p in ps.products) for ps in part_searches if ps.products)
+        if not parts_low and not parts_high:
+            return CostEstimate(summary="No products found to estimate cost.")
+    elif products:
+        parts_low = min(p.price_cents for p in products)
+        parts_high = max(p.price_cents for p in products)
+    else:
+        return CostEstimate(summary="No products found to estimate cost.")
 
     labor_low = analysis.hire_price_min_cents
     labor_high = analysis.hire_price_max_cents

@@ -71,6 +71,7 @@ class IssueAnalysis(BaseModel):
     hire_reason: str = Field(default="", description="Why hiring is recommended, if applicable")
     hire_price_min_cents: int = Field(default=0, description="Low end of handyman price estimate in cents")
     hire_price_max_cents: int = Field(default=0, description="High end of handyman price estimate in cents")
+    parts_to_purchase: list[dict] = Field(default_factory=list, description="All purchasable parts needed, each with name, description, search_query")
 
 class ProductSpec(BaseModel):
     spec_id: str = Field(default_factory=_uid)
@@ -95,6 +96,13 @@ class ProductResult(BaseModel):
     match_score: float = 0.0
     recommendation_reason: str = ""
     rank: int = 0
+
+
+class PartSearchResult(BaseModel):
+    part_name: str = ""
+    part_description: str = ""
+    search_query: str = ""
+    products: list[ProductResult] = Field(default_factory=list)
 
 class OrderRecord(BaseModel):
     order_id: str = Field(default_factory=_uid)
@@ -136,3 +144,4 @@ class PipelineResult(BaseModel):
     error: Optional[str] = None
     refinement_history: list[str] = Field(default_factory=list, description="Accumulated user feedback across refinement rounds")
     spec_history: list[dict[str, Any]] = Field(default_factory=list, description="Prior spec snapshots for diffing")
+    part_searches: list[PartSearchResult] = Field(default_factory=list, description="Per-part product search results when multiple parts are needed")
