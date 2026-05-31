@@ -38,12 +38,8 @@ def delete_session(session_id: str) -> bool:
     return True
 
 
-def list_sessions(user_id: str | None = None, dev_user_id: str = "") -> list[dict]:
-    """List sessions, sorted newest first.
-
-    When user_id is given, only return sessions owned by that user
-    (dev_user_id sees all sessions regardless).
-    """
+def list_sessions() -> list[dict]:
+    """List all sessions with basic info, sorted newest first."""
     results = []
     for d in sessions_dir().iterdir():
         if not d.is_dir():
@@ -59,14 +55,8 @@ def list_sessions(user_id: str | None = None, dev_user_id: str = "") -> list[dic
                     "created_at": session.get("created_at", ""),
                     "status": session.get("status", "unknown"),
                     "category": session.get("display_name") or analysis.get("item_category", ""),
-                    "user_id": session.get("user_id", ""),
                 })
             except Exception:
-                results.append({"session_id": d.name, "status": "corrupt",
-                                 "created_at": "", "user_id": ""})
-
-    if user_id and user_id != dev_user_id:
-        results = [r for r in results if r.get("user_id") == user_id]
-
+                results.append({"session_id": d.name, "status": "corrupt", "created_at": ""})
     results.sort(key=lambda x: x.get("created_at", ""), reverse=True)
     return results
