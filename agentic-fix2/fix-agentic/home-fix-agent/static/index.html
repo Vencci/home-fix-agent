@@ -1016,6 +1016,7 @@ function handleStreamEvent(event) {
     case 'done':
       hideTyping();
       currentSession = event.result;
+      renderedCount = event.result.messages ? event.result.messages.length : 0;
       if (event.result.cost_estimate) {
         replaceOrAppend('cost-card', buildCostCard(event.result.cost_estimate, event.result.products));
       }
